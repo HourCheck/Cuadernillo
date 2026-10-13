@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cuadernillo</title>
+
+  <!-- Bootstrap 5 -->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="css/cssmain.css">
+
+
+ <style>
+
+:root {
+  --red: #c90d1d;
+  --blue-card: #d1fdfd;
+  --green-card: #7bd957;
+  --pink-card: #ed65bd;
+  --black: #050505;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fff;
+  overflow-x: hidden;
+}
+
+/* Barra superior */
+.cuadernillo-navbar {
+  height: 88px;
+  background: var(--red);
+  position: relative;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.menu-button {
+  border: 0;
+  background: transparent;
+  color: #fff;
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.menu-button i {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.brand-name {
+  color: #fff;
+  font-size: clamp(27px, 3vw, 38px);
+  font-weight: 800;
+  letter-spacing: -.7px;
+}
+
+.logo-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, .04);
+}
+
+.logo-circle img {
+  width: 70px;
+  height: 62px;
+  object-fit: contain;
+}
+
+/* Menú */
+.menu-lateral {
+  width: 290px !important;
+  border: 0;
+}
+
+.menu-lateral .offcanvas-header {
+  background: var(--red);
+  color: #fff;
+}
+
+.menu-lateral .btn-close {
+  filter: brightness(0) invert(1);
+}
+
+.menu-lateral .offcanvas-title {
+  font-weight: 800;
+  font-size: 28px;
+}
+
+.menu-text {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.menu-link {
+  display: block;
+  text-decoration: none;
+  color: #111;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 13px 15px;
+  border-radius: 12px;
+  margin-bottom: 7px;
+}
+
+.menu-link:hover {
+  background: #f3f3f3;
+  color: var(--red);
+}
+
+/* Área principal */
+.main-content {
+  position: relative;
+  min-height: calc(100vh - 88px);
+  overflow: hidden;
+  background: #fff;
+}
+
+.welcome-section {
+  position: relative;
+  z-index: 5;
+  padding-top: 38px;
+  text-align: center;
+}
+
+.welcome-section h1 {
+  margin: 0 0 43px;
+  color: var(--black);
+  font-size: clamp(34px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -.8px;
+}
+
+.levels-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(45px, 9vw, 105px);
+  position: relative;
+  z-index: 10;
+}
+
+.level-card {
+  width: 207px;
+  height: 207px;
+  border-radius: 23px;
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 43px;
+  box-shadow: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.level-card:hover {
+  color: #000;
+  transform: translateY(-7px) scale(1.025);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, .12);
+}
+
+.level-card h2 {
+  margin: 0;
+  font-size: 35px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.level-card img {
+  width: 105px;
+  height: 105px;
+  object-fit: contain;
+  margin-top: 12px;
+}
+
+.basic-card {
+  background: var(--blue-card);
+}
+
+.intermediate-card {
+  background: var(--green-card);
+}
+
+.advanced-card {
+  background: var(--pink-card);
+}
+
+/* Decoración */
+.decor {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+.decor-bird {
+  width: 205px;
+  left: -20px;
+  top: -15px;
+  transform: rotate(-7deg);
+}
+
+.decor-penguin {
+  width: 145px;
+  right: -8px;
+  top: 18px;
+  transform: rotate(2deg);
+}
+
+.decor-frog {
+  width: 125px;
+  left: 10px;
+  bottom: -22px;
+}
+
+.decor-snake {
+  width: 220px;
+  left: 50%;
+  bottom: -34px;
+  transform: translateX(-50%);
+}
+
+.decor-chick {
+  width: 150px;
+  right: 8px;
+  bottom: -10px;
+}
+
+/* Modal */
+.level-modal {
+  border: 0;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.modal-icon {
+  font-size: 62px;
+  margin-bottom: 5px;
+}
+
+.level-modal h3 {
+  font-weight: 800;
+}
+
+.level-modal p {
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .levels-row {
+    gap: 22px;
+  }
+
+  .level-card {
+    width: 190px;
+    height: 190px;
+  }
+
+  .level-card h2 {
+    font-size: 30px;
+  }
+
+  .level-card img {
+    width: 92px;
+    height: 92px;
+  }
+
+  .decor-bird {
+    width: 150px;
+  }
+
+  .decor-penguin {
+    width: 100px;
+  }
+}
+
+@media (max-width: 700px) {
+  .cuadernillo-navbar {
+    height: 72px;
+  }
+
+  .brand-name {
+    font-size: 27px;
+  }
+
+  .menu-button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .menu-button i {
+    font-size: 36px;
+  }
+
+  .logo-circle {
+    width: 58px;
+    height: 58px;
+  }
+
+  .logo-circle img {
+    width: 51px;
+    height: 47px;
+  }
+
+  .main-content {
+    min-height: calc(100vh - 72px);
+  }
+
+  .welcome-section {
+    padding-top: 32px;
+  }
+
+  .welcome-section h1 {
+    font-size: 31px;
+    margin-bottom: 30px;
+  }
+
+  .levels-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .level-card {
+    width: min(80vw, 250px);
+    height: 165px;
+    padding-top: 24px;
+  }
+
+  .level-card h2 {
+    font-size: 30px;
+  }
+
+  .level-card img {
+    width: 75px;
+    height: 75px;
+    margin-top: 8px;
+  }
+
+  .decor-bird {
+    width: 100px;
+    top: 0;
+    left: -30px;
+    opacity: .75;
+  }
+
+  .decor-penguin {
+    width: 75px;
+    right: -12px;
+    top: 5px;
+  }
+
+  .decor-frog,
+  .decor-snake,
+  .decor-chick {
+    display: none;
+  }
+}
+
+
+ </style>
+
+</head>
+
+<body>
+
+  <nav class="navbar cuadernillo-navbar">
+
+    <div class="container-fluid px-3 px-md-5">
+
+      <div class="d-flex align-items-center gap-3">
+
+        <button class="menu-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral" aria-controls="menuLateral" aria-label="Abrir menú">
+
+          <i class="bi bi-list"></i>
+
+        </button>
+
+        <span class="brand-name">Cuadernillo</span>
+
+      </div>
+
+      <div class="logo-circle">
+
+        <img src="img/CadernilloOnly.png" alt="Logo de Cuadernillo">
+
+      </div>
+
+    </div>
+
+  </nav>
+
+  <div class="offcanvas offcanvas-start menu-lateral" tabindex="-1" id="menuLateral" aria-labelledby="menuLateralLabel">
+
+    <div class="offcanvas-header">
+
+      <h5 class="offcanvas-title" id="menuLateralLabel">Cuadernillo</h5>
+
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+
+    </div>
+
+    <div class="offcanvas-body">
+
+      <p class="menu-text">¡Vamos a aprender jugando!</p>
+
+      <a href="index.html" class="menu-link">Inicio</a>
+
+      <a href="#" class="menu-link">Niveles</a>
+
+      <a href="basico.html" class="menu-link">Básico</a>
+
+      <a href="intermedio.html" class="menu-link">Intermedio</a>
+
+      <a href="avanzado.html" class="menu-link">Avanzado</a>
+
+    </div>
+
+  </div>
+
+  <main id="inicio" class="main-content">
+
+    <img class="decor decor-bird" src="imagenes/camaleon.png" alt="Pajarito decorativo">
+
+    <img class="decor decor-penguin" src="imagenes/pinguino.png" alt="Pingüino decorativo">
+
+    <section class="welcome-section container" id="niveles">
+
+      <h1>¡Vamos!</h1>
+
+      <div class="levels-row">
+
+        <a href="basico.html" class="level-card basic-card" id="basico" data-level="Básico">
+
+          <h2>Básico</h2>
+
+          <img src="imagenesNOBG/abeja-removebg-preview (1).png" alt="Abejita">
+
+        </a>
+
+        <a href="intermedio.html" class="level-card intermediate-card" id="intermedio" data-level="Intermedio">
+
+          <h2>Intermedio</h2>
+
+          <img src="imagenesNOBG/elefante-removebg-preview.png" alt="Elefante">
+
+        </a>
+
+        <a href="avanzado.html" class="level-card advanced-card" id="avanzado" data-level="Avanzado">
+
+          <h2>Avanzado</h2>
+
+          <img src="imagenesNOBG/rompecabezas-removebg-preview.png" alt="Piezas de rompecabezas">
+
+        </a>
+
+      </div>
+
+    </section>
+
+    <img class="decor decor-frog" src="imagenes/rana.png" alt="Ranita decorativa">
+
+    <img class="decor decor-snake" src="imagenes/culebra.png" alt="Serpiente decorativa">
+
+    <img class="decor decor-chick" src="imagenes/pollito.png" alt="Pollito decorativo">
+
+  </main>
+
+  <div class="modal fade" id="levelModal" tabindex="-1" aria-labelledby="levelModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+      <div class="modal-content level-modal">
+
+        <div class="modal-body text-center p-4">
+
+          <div class="modal-icon">📚</div>
+
+          <h3 id="levelModalLabel">¡Vamos a aprender!</h3>
+
+          <p id="levelModalText">Seleccionaste un nivel.</p>
+
+          <button type="button" class="btn btn-danger rounded-pill px-4" data-bs-dismiss="modal">¡Empezar!</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+ 
+
+</body>
+
+</html>

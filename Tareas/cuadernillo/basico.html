@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel Básico - Aprendiendo las Vocales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Encabezado Celeste */
+        header {
+            background-color: #38b6ff;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* Botón de Regresar con Flecha */
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dibujo de la flecha hacia atrás usando CSS */
+        .back-arrow {
+            border: solid white;
+            border-width: 0 6px 6px 0;
+            display: inline-block;
+            padding: 6px;
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+        }
+
+        .header-title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        /* Espaciador para centrar el título perfectamente */
+        .header-spacer {
+            width: 45px;
+        }
+
+        /* Contenedor Principal (Layout de 3 columnas: Mascota izq, Tarjetas centro, Mascota der) */
+        .game-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 30px auto;
+            width: 100%;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* Tamaños y posiciones de las mascotas laterales */
+        .mascot-left {
+            width: 220px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .mascot-right {
+            width: 220px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Cuadrícula de Tarjetas (2 columnas x 2 filas) */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 170px);
+            gap: 25px 35px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Estilo de la Tarjeta de Objeto (Imagen arriba, Texto abajo) */
+        .card-item {
+            background-color: white;
+            border: 5px solid #38b6ff;
+            border-radius: 25px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            height: 210px;
+            width: 170px;
+        }
+
+        .card-item:hover {
+            transform: scale(1.05);
+        }
+
+        .card-image-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px;
+        }
+
+        .card-image-container img {
+            max-width: 85px;
+            max-height: 85px;
+            object-fit: contain;
+        }
+
+        .card-label {
+            background-color: #38b6ff;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 8px 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        /* Estilo de los Botones de Audio */
+        .card-audio {
+            background-color: #38b6ff;
+            border-radius: 25px;
+            height: 210px;
+            width: 170px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.2s, background-color 0.2s;
+            border: none;
+        }
+
+        .card-audio:hover {
+            transform: scale(1.05);
+            background-color: #299fe6;
+        }
+
+        .card-audio img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+        }
+
+        #feedback {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 15px 0;
+            min-height: 40px;
+            font-weight: bold;
+        }
+
+        .correcto { color: #00c853; }
+
+        /* Adaptabilidad Responsiva para Móviles y Tablets */
+        @media (max-width: 850px) {
+            .mascot-left, .mascot-right {
+                display: none; /* Ocultar mascotas en pantallas pequeñas para optimizar espacio */
+            }
+            .game-container {
+                justify-content: center;
+            }
+            .cards-grid {
+                grid-template-columns: repeat(2, 150px);
+                gap: 20px;
+            }
+            .card-item, .card-audio {
+                width: 150px;
+                height: 190px;
+            }
+            .header-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado con Botón de Regresar y Título -->
+    <header>
+        <!-- Cambia 'history.back()' por la ruta de tu menú si lo prefieres, ej: href="menu.html" -->
+        <button class="back-btn" onclick="history.back()" aria-label="Volver atrás">
+            <i class="back-arrow"></i>
+        </button>
+        <h1 class="header-title">Nivel Básico</h1>
+        <!-- Espaciador invisible para equilibrar el diseño y mantener el título centrado -->
+        <div class="header-spacer"></div>
+    </header>
+
+    <!-- Contenedor del Nivel con Mascotas y Tarjetas -->
+    <div class="game-container">
+        
+        <!-- Mascota Izquierda (Tigre bailando) -->
+        <img src="imagenes/tigrebailando.png" alt="Tigre animado" class="mascot-left">
+
+        <!-- Cuadrícula de elementos -->
+        <div class="cards-grid">
+            
+            <!-- Fila 1: Tarjeta Abeja + Botón de Audio -->
+            <div class="card-item" onclick="reproducirSonido('Abeja')">
+                <div class="card-image-container">
+                    <img src="imagenes/abeja.png" alt="Abeja">
+                </div>
+                <div class="card-label">Abeja</div>
+            </div>
+
+            <button class="card-audio" onclick="reproducirSonido('Abeja')">
+                <img src="imagenes/sonidovector.png" alt="Reproducir audio">
+            </button>
+
+            <!-- Fila 2: Tarjeta Avión + Botón de Audio -->
+            <div class="card-item" onclick="reproducirSonido('Avión')">
+                <div class="card-image-container">
+                    <img src="imagenes/animales de tarjetas/avion.png" alt="Avión">
+                </div>
+                <div class="card-label">Avión</div>
+            </div>
+
+            <button class="card-audio" onclick="reproducirSonido('Avión')">
+                <img src="imagenes/sonidovector.png" alt="Reproducir audio">
+            </button>
+
+<!-- Fila 3: Tarjeta iguana + Botón de Audio -->
+            <div class="card-item" onclick="reproducirSonido('Iguana')">
+                <div class="card-image-container">
+                    <img src="imagenes/animales de tarjetas/iguana.png" alt="iguana">
+                </div>
+                <div class="card-label">Iguana</div>
+            </div>
+           <button class="card-audio" onclick="reproducirSonido('Iguana')">
+                <img src="imagenes/sonidovector.png" alt="Reproducir audio">
+            </button>
+
+        </div>
+
+        <!-- Fila 4: Tarjeta iguana + Botón de Audio -->
+            <div class="card-item" onclick="reproducirSonido('oso')">
+                <div class="card-image-container">
+                    <img src="imagenes/animales de tarjetas/oso.png" alt="oso">
+                </div>
+                <div class="card-label">Oso</div>
+            </div>
+           <button class="card-audio" onclick="reproducirSonido('oso')">
+                <img src="imagenes/sonidovector.png" alt="Reproducir audio">
+            </button>
+
+        </div>
+
+        <!-- Mascota Derecha (León bailando) -->
+        <img src="imagenes/leonbailando.png" alt="León animado" class="mascot-right">
+
+    </div>
+
+    <div id="feedback"></div>
+
+    <script>
+        // Función interactiva de voz para reproducir el nombre al hacer clic
+        function reproducirSonido(palabra) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = `🔊 Reproduciendo: ${palabra}`;
+            feedback.className = 'correcto';
+
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(palabra);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+    </script>
+</body>
+</html>
+

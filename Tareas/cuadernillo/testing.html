@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nivel Intermedio</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: white;
+}
+
+/* Encabezado verde */
+header {
+    background: #63ad2f;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+    font-size: clamp(30px, 5vw, 65px);
+}
+
+#menuButton {
+    position: absolute;
+    left: 15px;
+    top: 20px;
+    background: none;
+    color: white;
+    border: none;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+/* Menú de navegación */
+nav {
+    display: none;
+    background: #4d9225;
+    text-align: center;
+    padding: 15px;
+}
+
+nav.open {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Instrucciones */
+.instrucciones {
+    text-align: center;
+    padding: 15px;
+}
+
+.instrucciones h2 {
+    color: #4d9225;
+}
+
+/* Puntaje */
+.puntaje {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px;
+}
+
+/* Vocales que el niño puede arrastrar */
+.banco-vocales {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px;
+}
+
+.vocal {
+    width: 60px;
+    height: 60px;
+    background: #63ad2f;
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 4px #4d9225;
+}
+
+.vocal:focus {
+    outline: 4px solid #ffd966;
+}
+
+/* Tarjetas verdes */
+.contenedor {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px;
+}
+
+.tarjeta {
+    background: #63ad2f;
+    border-radius: 30px;
+    padding: 15px;
+    text-align: center;
+    color: white;
+}
+
+/* Espacio donde colocarás tus imágenes */
+.imagen {
+    background: white;
+    border-radius: 25px;
+    height: 200px;
+    padding: 10px;
+}
+
+.imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Palabras incompletas */
+.palabra {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 12px 0;
+    min-height: 50px;
+}
+
+.letra-fija {
+    font-size: clamp(25px, 3vw, 38px);
+    font-weight: bold;
+}
+
+/* Casillas para soltar las vocales */
+.espacio {
+    width: 38px;
+    height: 45px;
+    background: #4d9225;
+    color: white;
+    border: none;
+    border-bottom: 4px solid white;
+    border-radius: 5px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.espacio:hover,
+.espacio.seleccionado {
+    outline: 3px dashed #ffe36a;
+}
+
+.espacio.completado {
+    border-bottom-color: #ffe36a;
+    cursor: default;
+}
+
+.mensaje {
+    min-height: 25px;
+    font-weight: bold;
+}
+
+/* Resultado final */
+#resultado {
+    display: none;
+    text-align: center;
+    padding: 25px;
+    margin: 20px;
+    border: 4px dashed #63ad2f;
+    border-radius: 20px;
+}
+
+#resultado button,
+#reiniciar {
+    background: #4d9225;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+#reiniciar {
+    display: block;
+    margin: 25px auto;
+}
+
+/* Pie de página */
+footer {
+    background: #63ad2f;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Adaptación para tabletas */
+@media (max-width: 850px) {
+    .contenedor {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Adaptación para celulares */
+@media (max-width: 520px) {
+    .contenedor {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+    }
+
+    header h1 {
+        font-size: 30px;
+        padding-left: 35px;
+    }
+
+    .imagen {
+        height: 220px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <!-- Encabezado con Botón de Regresar y Título -->
+    <header>
+        <!-- Cambia 'history.back()' por la ruta de tu menú si lo prefieres, ej: href="menu.html" -->
+        <button class="back-btn" onclick="history.back()" aria-label="Volver atrás">
+            <i class="back-arrow"></i>
+        </button>
+        <h1 class="header-title">Nivel intermedio</h1>
+        <!-- Espaciador invisible para equilibrar el diseño y mantener el título centrado -->
+        <div class="header-spacer"></div>
+    </header>
+
+</header>
+
+
+<main>
+
+<section class="instrucciones">
+    <h2>¡Completa las palabras!</h2>
+    <p>Arrastra la vocal correcta hasta el espacio vacío.</p>
+    <p>Por cada acierto ganas 10 puntos. Por cada error pierdes 2 puntos.</p>
+</section>
+
+<div class="puntaje">
+    ⭐ Puntos: <span id="puntos">0</span>
+    <br><br>
+    Vocales completadas:
+    <span id="progreso">0</span>/<span id="total">14</span>
+</div>
+
+<!-- Banco de vocales -->
+<section class="banco-vocales">
+    <div class="vocal" draggable="true" tabindex="0"
+         role="button" data-vocal="a">A</div>
+    <div class="vocal" draggable="true" tabindex="0"
+         role="button" data-vocal="e">E</div>
+    <div class="vocal" draggable="true" tabindex="0"
+         role="button" data-vocal="i">I</div>
+    <div class="vocal" draggable="true" tabindex="0"
+         role="button" data-vocal="o">O</div>
+    <div class="vocal" draggable="true" tabindex="0"
+         role="button" data-vocal="u">U</div>
+</section>
+
+<!-- Tarjetas de los animales -->
+<section class="contenedor">
+
+    <!-- ABEJA -->
+    <article class="tarjeta">
+        <div class="imagen">
+            <img src="imagenes/abeja.png" alt="Abeja">
+        </div>
+
+        <div class="palabra">
+            <button class="espacio" data-respuesta="a"></button>
+            <span class="letra-fija">B</span>
+            <button class="espacio" data-respuesta="e"></button>
+            <span class="letra-fija">J</span>
+            <button class="espacio" data-respuesta="a"></button>
+        </div>
+
+        <p class="mensaje" aria-live="polite"></p>
+    </article>
+
+    <!-- ELEFANTE -->
+    <article class="tarjeta">
+        <div class="imagen">
+            <img src="imagenes/elefante.png" alt="Elefante">
+        </div>
+
+        <div class="palabra">
+            <button class="espacio" data-respuesta="e"></button>
+            <span class="letra-fija">L</span>
+            <button class="espacio" data-respuesta="e"></button>
+            <span class="letra-fija">F</span>
+            <button class="espacio" data-respuesta="a"></button>
+            <span class="letra-fija">N T</span>
+            <button class="espacio" data-respuesta="e"></button>
+        </div>
+
+        <p class="mensaje" aria-live="polite"></p>
+    </article>
+
+    <!-- IGUANA -->
+    <article class="tarjeta">
+        <div class="imagen">
+            <img src="imagenes/animales de tarjetas/iguana.png" alt="Iguana">
+        </div>
+
+        <div class="palabra">
+            <button class="espacio" data-respuesta="i"></button>
+            <span class="letra-fija">G</span>
+            <button class="espacio" data-respuesta="u"></button>
+            <span class="letra-fija">A N A</span>
+        </div>
+
+        <p class="mensaje" aria-live="polite"></p>
+    </article>
+
+    <!-- OSO -->
+    <article class="tarjeta">
+        <div class="imagen">
+            <img src="imagenes/animales de tarjetas/oso.png" alt="Oso">
+        </div>
+
+        <div class="palabra">
+            <button class="espacio" data-respuesta="o"></button>
+            <span class="letra-fija">S</span>
+            <button class="espacio" data-respuesta="o"></button>
+        </div>
+
+        <p class="mensaje" aria-live="polite"></p>
+    </article>
+
+    <!-- URRACA -->
+    <article class="tarjeta">
+        <div class="imagen">
+            <img src="imagenes/.png" alt="Urraca">
+        </div>
+
+        <div class="palabra">
+            <button class="espacio" data-respuesta="u"></button>
+            <span class="letra-fija">R R</span>
+            <button class="espacio" data-respuesta="a"></button>
+            <span class="letra-fija">C</span>
+            <button class="espacio" data-respuesta="a"></button>
+        </div>
+
+        <p class="mensaje" aria-live="polite"></p>
+    </article>
+
+</section>
+
+<section id="resultado" aria-live="polite">
+    <h2 id="tituloResultado"></h2>
+    <p id="mensajeResultado"></p>
+    <button onclick="reiniciarJuego()">Jugar otra vez</button>
+</section>
+
+<button id="reiniciar" onclick="reiniciarJuego()">
+    Reiniciar actividad
+</button>
+
+</main>
+
+<footer>
+    Aprendiendo las vocales · ¡Aprender jugando es divertido!
+</footer>
+
+<script>
+// Variables del juego
+let puntos = 0;
+let completadas = 0;
+let vocalSeleccionada = null;
+
+const vocales = document.querySelectorAll(".vocal");
+const espacios = document.querySelectorAll(".espacio");
+
+document.getElementById("total").textContent = espacios.length;
+
+// Abrir y cerrar el menú
+document.getElementById("menuButton").addEventListener("click", () => {
+    document.getElementById("menu").classList.toggle("open");
+});
+
+// Seleccionar y arrastrar las vocales
+vocales.forEach(vocal => {
+
+    vocal.addEventListener("dragstart", evento => {
+        vocalSeleccionada = vocal.dataset.vocal;
+        evento.dataTransfer.setData("text/plain", vocalSeleccionada);
+    });
+
+    // Alternativa para celulares: tocar la vocal
+    vocal.addEventListener("click", () => {
+        vocalSeleccionada = vocal.dataset.vocal;
+
+        vocales.forEach(v => v.classList.remove("seleccionado"));
+        vocal.classList.add("seleccionado");
+    });
+
+    // Permitir seleccionar con teclado
+    vocal.addEventListener("keydown", evento => {
+        if (evento.key === "Enter" || evento.key === " ") {
+            evento.preventDefault();
+            vocal.click();
+        }
+    });
+});
+
+// Preparar los espacios para recibir las vocales
+espacios.forEach(espacio => {
+
+    espacio.addEventListener("dragover", evento => {
+        if (!espacio.disabled) {
+            evento.preventDefault();
+        }
+    });
+
+    espacio.addEventListener("drop", evento => {
+        evento.preventDefault();
+
+        const letra = evento.dataTransfer.getData("text/plain")
+                     || vocalSeleccionada;
+
+        if (letra) {
+            comprobarVocal(espacio, letra);
+        }
+    });
+
+    // También se puede tocar el espacio después de elegir la vocal
+    espacio.addEventListener("click", () => {
+        if (vocalSeleccionada) {
+            comprobarVocal(espacio, vocalSeleccionada);
+        }
+    });
+});
+
+// Comprobar si la vocal colocada es correcta
+function comprobarVocal(espacio, letra) {
+
+    // No volver a contar un espacio ya completado
+    if (espacio.disabled) return;
+
+    const tarjeta = espacio.closest(".tarjeta");
+    const mensaje = tarjeta.querySelector(".mensaje");
+
+    if (letra.toLowerCase() === espacio.dataset.respuesta) {
+
+        // Respuesta correcta
+        espacio.textContent = letra.toUpperCase();
+        espacio.disabled = true;
+        espacio.classList.add("completado");
+
+        puntos += 10;
+        completadas++;
+
+        mensaje.textContent = "¡Muy bien! ⭐";
+
+    } else {
+
+        // Respuesta incorrecta
+        puntos = Math.max(0, puntos - 2);
+
+        mensaje.textContent = "¡Inténtalo otra vez! 💚";
+    }
+
+    document.getElementById("puntos").textContent = puntos;
+    document.getElementById("progreso").textContent = completadas;
+
+    // Mostrar el resultado al terminar
+    if (completadas === espacios.length) {
+        mostrarResultado();
+    }
+}
+
+// Felicitación final
+function mostrarResultado() {
+
+    const resultado = document.getElementById("resultado");
+    resultado.style.display = "block";
+
+    if (puntos === espacios.length * 10) {
+        document.getElementById("tituloResultado").textContent =
+            "🥳 ¡Excelente trabajo!";
+
+        document.getElementById("mensajeResultado").textContent =
+            "¡Conseguiste todos los puntos! Eres una estrella.";
+    } else {
+        document.getElementById("tituloResultado").textContent =
+            "😊 ¡Buen trabajo!";
+
+        document.getElementById("mensajeResultado").textContent =
+            "Conseguiste " + puntos +
+            " puntos. ¡Sigue practicando, tú puedes!";
+    }
+
+    resultado.scrollIntoView({ behavior: "smooth" });
+}
+
+// Reiniciar para volver a jugar
+function reiniciarJuego() {
+
+    puntos = 0;
+    completadas = 0;
+    vocalSeleccionada = null;
+
+    document.getElementById("puntos").textContent = 0;
+    document.getElementById("progreso").textContent = 0;
+    document.getElementById("resultado").style.display = "none";
+
+    espacios.forEach(espacio => {
+        espacio.textContent = "";
+        espacio.disabled = false;
+        espacio.classList.remove("completado");
+    });
+
+    document.querySelectorAll(".mensaje").forEach(mensaje => {
+        mensaje.textContent = "";
+    });
+
+    vocales.forEach(vocal => {
+        vocal.classList.remove("seleccionado");
+    });
+}
+</script>
+
+</body>
+</html>

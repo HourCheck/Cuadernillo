@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuadernillo | Inicio</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="cssmain.css">
+
+  
+</head>
+<body>
+  
+  <nav class="navbar cuadernillo-navbar">
+    <div class="container-fluid px-3 px-md-5">
+      <div class="d-flex align-items-center gap-3">
+        <button class="menu-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral" aria-controls="menuLateral" aria-label="Abrir menú">
+          <i class="bi bi-list"></i>
+        </button>
+        <span class="brand-name">Cuadernillo</span>
+      </div>
+    
+    <!-- CSS de Bootstrap 5 desde CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Fuente tipográfica infantil e instructiva desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- ESTILOS CSS PERSONALIZADOS (DISEÑO INFANTIL) -->
+
+    <style>
+        /* Configuración de fuentes y fondo suave alegre */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #FFF9E6; /* Fondo amarillo muy clarito */
+            color: #4A4A4A;
+        }
+
+        /* Barra de navegación superior */
+        .bg-custom {
+            background-color: #FF6B6B;
+        }
+
+        .brand-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        /* Títulos e instrucciones con fuentes llamativas */
+        .titulo-nivel {
+            font-family: 'Fredoka One', cursive;
+            color: #FF5722;
+            font-size: 2.5rem;
+        }
+
+        .instruccion-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00897B;
+        }
+
+        /* Tarjetas estilo "juguete" con bordes redondeados y sombras sólidas */
+        .sombra-divertida {
+            border-radius: 20px;
+            border: 4px solid #FFD54F;
+            box-shadow: 0px 8px 0px #FFCA28;
+            background-color: #FFFFFF;
+        }
+
+        /* Indicador de puntuación de los ejercicios */
+        .tarjeta-puntos {
+            background-color: #4DD0E1;
+            color: white;
+            font-family: 'Fredoka One', cursive;
+            border-color: #00ACC1;
+            box-shadow: 0px 6px 0px #00838F;
+        }
+
+        /* Formato para la tarjeta contenedora del ejercicio */
+        .tarjeta-palabra {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .imagen-objeto {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        /* Cuadro de palabra e input de texto para escribir la vocal */
+        .palabra-incompleta {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .input-vocal {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border: 3px solid #FF8A65;
+            border-radius: 12px;
+            text-transform: lowercase;
+            display: inline-block;
+            background-color: #FFFDE7;
+        }
+
+        /* Botón comprobar la vocal escrita */
+        .btn-comprobar {
+            background-color: #81C784;
+            color: white;
+            font-weight: bold;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0px 4px 0px #388E3C;
+        }
+
+        .btn-comprobar:hover {
+            background-color: #66BB6A;
+            color: white;
+        }
+
+        /* Tarjeta de calificación y resultado final */
+        .tarjeta-resultado {
+            border-color: #AB47BC;
+            box-shadow: 0px 8px 0px #7B1FA2;
+        }
+
+        .emoji-grande {
+            font-size: 5rem;
+        }
+
+        .btn-repetir {
+            background-color: #FF7043;
+            color: white;
+            font-weight: bold;
+            border-radius: 15px;
+            box-shadow: 0px 4px 0px #D84315;
+            border: none;
+        }
+
+        /* Footer / Pie de página personalizado */
+        .footer-custom {
+            background-color: #4DD0E1;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Adaptabilidad para dispositivos móviles con Media Query */
+        @media (max-width: 576px) {
+            .titulo-nivel {
+                font-size: 1.8rem;
+            }
+            .palabra-incompleta {
+                font-size: 1.5rem;
+            }
+            .input-vocal {
+                width: 42px;
+                height: 42px;
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado con menú semántico de navegación -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-custom shadow-sm">
+            <div class="container">
+                <a class="navbar-brand brand-title" href="#">🎨 Aprendo Jugando</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Menú con los requerimientos de ítems solicitados -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="basico.html">Nivel Básico</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="intermedio.html">Nivel Intermedio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="avanzado.html">Nivel Avanzado</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Área principal con semántica HTML <main> -->
+    <main class="container my-4">
+        <!-- Título e instrucciones -->
+        <section class="text-center mb-4">
+            <h1 class="titulo-nivel">Nivel Intermedio</h1>
+            <p class="instruccion-text">Escribe la vocal que falta para completar la palabra en cada imagen.</p>
+        </section>
+
+        <!-- Marcador con el puntaje que se actualiza dinámicamente -->
+        <section class="row justify-content-center mb-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card p-3 text-center sombra-divertida tarjeta-puntos">
+                    <h3 class="m-0">PUNTOS: <span id="puntuacion">0</span> / 500</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contenedor donde se cargarán las 5 palabras desde JavaScript -->
+        <section class="row justify-content-center g-4" id="contenedor-ejercicios">
+        </section>
+
+        <!-- Pantalla emergente para carita feliz o triste según los puntos finales -->
+        <section id="pantalla-resultado" class="text-center mt-5 d-none">
+            <div class="card p-4 sombra-divertida d-inline-block text-center tarjeta-resultado">
+                <div id="carita-emoji" class="emoji-grande"></div>
+                <h2 id="mensaje-final" class="mt-3"></h2>
+                <button class="btn btn-repetir btn-lg mt-3" onclick="reiniciarJuego()">Jugar de nuevo</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de página semántico <footer> -->
+    <footer class="footer-custom text-center py-3 mt-5">
+        <div class="container">
+            <p class="m-0">Proyecto: Aprendiendo las Vocales &copy; 2026 - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <!-- JS de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- LÓGICA EN JAVASCRIPT CON COMENTARIOS -->
+
+    <script>
+        // Array de objetos con la información de los 5 objetos e imágen asociada
+        const listaEjercicios = [
+            { id: 1, incompleta: "_ rbol", correcta: "a", imagen: "https://cdn-icons-png.flaticon.com/512/489/489969.png" },
+            { id: 2, incompleta: "El_fante", correcta: "e", imagen: "https://cdn-icons-png.flaticon.com/512/3069/3069172.png" },
+            { id: 3, incompleta: "Ig_u_na", correcta: "i", imagen: "https://cdn-icons-png.flaticon.com/512/3069/3069186.png" },
+            { id: 4, incompleta: "_so", correcta: "o", imagen: "https://cdn-icons-png.flaticon.com/512/3069/3069224.png" },
+            { id: 5, incompleta: "_vas", correcta: "u", imagen: "https://cdn-icons-png.flaticon.com/512/3137/3137044.png" }
+        ];
+
+        // Variables de control de puntuación y ejercicios contestados
+        let puntos = 0;
+        let respondidos = 0;
+        const puntosPorAcierto = 100;
+        const puntosPorError = 20; // Resta puntos por cada intento equivocado
+        const puntosMaximos = listaEjercicios.length * puntosPorAcierto;
+
+        // Función que dibuja las 5 tarjetas en el navegador
+        function cargarEjercicios() {
+            const contenedor = document.getElementById("contenedor-ejercicios");
+            contenedor.innerHTML = ""; // Limpia el contenedor
+
+            listaEjercicios.forEach(ejercicio => {
+                const col = document.createElement("div");
+                col.className = "col-12 col-sm-6 col-md-4";
+
+                col.innerHTML = `
+                    <div class="card tarjeta-palabra sombra-divertida">
+                        <img src="${ejercicio.imagen}" alt="Objeto" class="imagen-objeto mx-auto">
+                        <div class="palabra-incompleta my-2">
+                            ${construirHTMLPalabra(ejercicio)}
+                        </div>
+                        <button id="btn-${ejercicio.id}" class="btn btn-comprobar mt-2" onclick="comprobarRespuesta(${ejercicio.id})">
+                            Comprobar
+                        </button>
+                        <div id="mensaje-${ejercicio.id}" class="fw-bold mt-2"></div>
+                    </div>
+                `;
+                contenedor.appendChild(col);
+            });
+        }
+
+        // Reemplaza el guion bajo por un elemento <input> donde el niño escribe
+        function construirHTMLPalabra(ejercicio) {
+            const partes = ejercicio.incompleta.split("_");
+            return `${partes[0]}<input type="text" id="input-${ejercicio.id}" class="input-vocal" maxlength="1">${partes[1]}`;
+        }
+
+        // Evalúa la vocal escrita cuando se hace clic en "Comprobar"
+        function comprobarRespuesta(id) {
+            const ejercicio = listaEjercicios.find(e => e.id === id);
+            const inputElem = document.getElementById(`input-${id}`);
+            const mensajeElem = document.getElementById(`mensaje-${id}`);
+            const btnElem = document.getElementById(`btn-${id}`);
+
+            // Obtiene la letra introducida ignorando espacios y mayúsculas
+            const respuestaUsuario = inputElem.value.trim().toLowerCase();
+
+            // Valida si la casilla está vacía
+            if (respuestaUsuario === "") {
+                mensajeElem.style.color = "#FF9800";
+                mensajeElem.innerText = "¡Escribe una vocal!";
+                return;
+            }
+
+            // Si la letra es correcta
+            if (respuestaUsuario === ejercicio.correcta) {
+                puntos += puntosPorAcierto;
+                mensajeElem.style.color = "#4CAF50";
+                mensajeElem.innerText = "¡Correcto! 🎉";
+                
+                // Bloquea el campo para no sumar puntos infinitos
+                inputElem.disabled = true;
+                btnElem.disabled = true;
+                respondidos++;
+            } else { // Si la letra es incorrecta
+                // Descuenta puntos sin bajar de cero
+                puntos = Math.max(0, puntos - puntosPorError);
+                mensajeElem.style.color = "#F44336";
+                mensajeElem.innerText = "¡Inténtalo de nuevo! ❌";
+                inputElem.value = ""; // Limpia la casilla para intentar de nuevo
+            }
+
+            // Actualiza los puntos en pantalla
+            actualizarPuntaje();
+
+            // Muestra resultado final si completó los 5 ejercicios
+            if (respondidos === listaEjercicios.length) {
+                mostrarResultadoFinal();
+            }
+        }
+
+        // Actualiza el texto con la puntuación
+        function actualizarPuntaje() {
+            document.getElementById("puntuacion").innerText = puntos;
+        }
+
+        // Evalúa y muestra carita feliz o triste al terminar todas las palabras
+        function mostrarResultadoFinal() {
+            const pantallaResultado = document.getElementById("pantalla-resultado");
+            const emojiElem = document.getElementById("carita-emoji");
+            const mensajeElem = document.getElementById("mensaje-final");
+
+            pantallaResultado.classList.remove("d-none");
+
+            // Condicional de carita feliz vs carita triste
+            if (puntos === puntosMaximos) {
+                emojiElem.innerText = "😊🎉";
+                mensajeElem.innerText = "¡Felicidades! ¡Obtuviste todos los puntos!";
+                mensajeElem.style.color = "#4CAF50";
+            } else {
+                emojiElem.innerText = "😢💪";
+                mensajeElem.innerText = `Lograste ${puntos} puntos. ¡Lo harás mucho mejor la próxima vez!`;
+                mensajeElem.style.color = "#FF9800";
+            }
+
+            pantallaResultado.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Restablece los puntos y tarjetas
+        function reiniciarJuego() {
+            puntos = 0;
+            respondidos = 0;
+            actualizarPuntaje();
+            document.getElementById("pantalla-resultado").classList.add("d-none");
+            cargarEjercicios();
+        }
+
+        // Se ejecuta automáticamente al cargar el HTML en el navegador
+        window.onload = cargarEjercicios;
+    </script>
+</body>
+</html>
+      <div class="logo-circle">
+        <img src="img/CadernilloOnly.png" alt="Logo de Cuadernillo">
+      </div>
+    </div>
+  </nav>

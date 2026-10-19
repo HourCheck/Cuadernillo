@@ -1,7 +1,7 @@
 :root {
   --red: #c90d1d;
-  --blue-card: #5882E8;
-  --green-card: #2A835F;
+  --blue-card: #75c2e6;
+  --green-card: #4eb670;
   --pink-card: #ffadf8;
      --black: #050505;
 }
@@ -286,14 +286,15 @@ body {
   }
 
   .decor-bird {
-    width: 100px;
-    top: 0;
+    width: 200px;
+    top: 30;
     left: -30px;
     opacity: .75;
   }
 
   .decor-penguin {
-    width: 100px;
+    width: 220px;
+    height: 400px;
     right: -12px;
     top: 5px;
   }

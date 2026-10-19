@@ -7,129 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
     <!-- Librería de Confeti para el efecto de fiesta -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        body {
-            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
-            background: linear-gradient(135deg, white 0%, white 100%);
-            color: #333;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .navbar {
-            background-color: #ffffff;
-            border-bottom: 4px solid lightcoral;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .navbar-brand {
-            color: #ab47bc !important;
-            font-weight: bold;
-            font-size: 1.6rem;
-        }
-
-        .nav-link {
-            color: #4a148c !important;
-            font-weight: bold;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: #ab47bc !important;
-        }
-
-        /* Tablero amplio para cartas grandes (5 columnas) */
-        .game-board {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-            max-width: 1050px;
-            margin: 0 auto;
-        }
-
-        /* Estilo de las tarjetas (Mucho más grandes y cómodas) */
-        .card-item {
-            background-color: white;
-            border: 6px solid lightcoral; /* Borde verde brillante */
-            border-radius: 30px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
-            padding: 15px;
-            width: 100%;
-            min-height: 200px; /* Altura grande */
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .card-item:hover {
-            transform: scale(1.05);
-        }
-
-        /* Estado inicial de la carta oculta */
-        .card-item.oculta {
-            background-color: pink;
-            border-color: lightcoral;
-            color: white;
-            font-size: 3.5rem;
-        }
-
-        /* Contenedor interno de la imagen más grande */
-        .card-image-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            background-color: #ffffff;
-            padding: 10px;
-            border-radius: 20px;
-        }
-
-        .card-image-container img {
-            width: 120px; /* Imagen grande de 120px */
-            height: 120px;
-            object-fit: contain;
-        }
-
-        /* Texto de la tarjeta grande y legible */
-        .texto-carta {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-top: 10px;
-            color: #4a148c;
-            text-align: center;
-        }
-
-        footer {
-            background-color: #4a148c;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: auto;
-            font-weight: bold;
-        }
-
-        /* MEDIA QUERIES PARA ADAPTABILIDAD EN MÓVILES */
-        @media (max-width: 1200px) {
-            .game-board {
-                grid-template-columns: repeat(3, 1fr);
-                max-width: 650px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .game-board {
-                grid-template-columns: repeat(2, 1fr);
-                max-width: 420px;
-            }
-        }
-    </style>
+       <link rel="stylesheet" href="avanzado.css">
 </head>
 <body>
 
@@ -158,12 +36,6 @@
         <button id="btn-reiniciar" class="btn btn-warning btn-lg fw-bold mt-3 d-none" onclick="reiniciarJuego()">¡Jugar de Nuevo! 🔄</button>
     </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <p class="mb-0">Proyecto Educativo: Aprendiendo las Vocales &copy; 2026</p>
-        </div>
-    </footer>
 
     <!-- JAVASCRIPT COMENTADO -->
     <script>

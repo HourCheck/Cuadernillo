@@ -24,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* Encabezado Celeste idéntico al Código 1 */
+        /* Encabezado Celeste */
         header {
             background-color: #6aff14;
             padding: 15px 25px;
@@ -78,10 +78,9 @@
             justify-content: space-between;
             align-items: center;
             max-width: 1100px;
-            margin: 30px auto;
+            margin: 20px auto 10px auto;
             width: 100%;
             padding: 0 20px;
-            flex: 1;
         }
 
         .mascot-left, .mascot-right {
@@ -93,7 +92,7 @@
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(2, 220px);
-            gap: 25px 35px;
+            gap: 20px 30px;
             justify-content: center;
             align-items: center;
         }
@@ -102,7 +101,7 @@
             display: none !important;
         }
 
-        /* Estilo de las tarjetas adaptado al Nivel Intermedio */
+        /* Estilo de las tarjetas */
         .card-item {
             background-color: white;
             border: 5px solid #6aff14;
@@ -113,12 +112,8 @@
             align-items: center;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             transition: transform 0.2s;
-            padding: 15px;
+            padding: 12px;
             width: 220px;
-        }
-
-        .card-item:hover {
-            transform: scale(1.03);
         }
 
         .card-image-container {
@@ -131,30 +126,78 @@
         }
 
         .card-image-container img {
-            width: 85px;
-            height: 85px;
+            width: 75px;
+            height: 75px;
             object-fit: contain;
         }
 
         .palabra-incompleta {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: #333;
-            margin: 10px 0;
+            margin: 8px 0;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
         }
 
-        .input-vocal {
+        /* Zona de soltar (Dropzone) */
+        .dropzone {
             width: 45px;
             height: 45px;
-            text-align: center;
+            border: 3px dashed #6aff14;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.6rem;
             font-weight: bold;
-            border: 3px solid #6aff14;
-            border-radius: 12px;
-            text-transform: lowercase;
-            display: inline-block;
             background-color: #f0f8ff;
+            color: #333;
+            vertical-align: middle;
+        }
+
+        .dropzone.drag-over {
+            background-color: #d1e7dd;
+            border-color: #00c853;
+        }
+
+        /* Banco de letras flotantes posicionado abajo */
+        .banco-vocales {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px auto 25px auto;
+            background: #f9f9f9;
+            padding: 12px 25px;
+            border-radius: 20px;
+            max-width: 500px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 2px dashed #6aff14;
+        }
+
+        .vocal-drag {
+            width: 50px;
+            height: 50px;
+            background-color: #6aff14;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            user-select: none;
+            transition: transform 0.1s;
+        }
+
+        .vocal-drag:active {
+            cursor: grabbing;
+            transform: scale(0.95);
         }
 
         .btn-comprobar {
@@ -163,38 +206,36 @@
             font-weight: 700;
             border-radius: 12px;
             border: none;
-            padding: 8px 15px;
-            font-size: 1rem;
+            padding: 6px 12px;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: background-color 0.2s;
             width: 100%;
         }
 
         .btn-comprobar:hover {
-            background-color: #6aff14;
+            background-color: #55db0b;
         }
 
         #feedback {
             text-align: center;
-            font-size: 2rem;
-            margin: 15px 0;
-            min-height: 50px;
+            font-size: 1.8rem;
+            margin: 10px 0;
+            min-height: 40px;
             font-weight: bold;
         }
 
         .correcto { color: #00c853; }
         .incorrecto { color: #f44336; }
 
-        /* Estilo para los puntos generales */
         .puntuacion-container {
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #6aff14;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
-        /* Pantalla de resultado final */
         #pantalla-resultado {
             text-align: center;
             margin: 20px auto;
@@ -214,15 +255,12 @@
         }
 
         .btn-repetir:hover {
-            background-color: #6aff14;
+            background-color: #55db0b;
         }
 
         @media (max-width: 900px) {
             .mascot-left, .mascot-right {
                 display: none;
-            }
-            .game-container {
-                justify-content: center;
             }
             .cards-grid {
                 grid-template-columns: repeat(2, 170px);
@@ -249,7 +287,7 @@
     </header>
 
     <div class="puntuacion-container">
-        PUNTOS: <span id="puntuacion">0</span> / 500
+        PUNTOS: <span id="puntuacion">0</span> / <span id="puntos-maximos">400</span>
     </div>
 
     <div class="game-container">
@@ -260,6 +298,14 @@
         </div>
 
         <img src="imagenes/leonbailando.png" alt="León animado" class="mascot-right">
+    </div>
+
+    <!-- Banco de vocales para arrastrar (Ubicación: Abajo) -->
+    <div class="banco-vocales" id="banco-vocales">
+        <div class="vocal-drag" draggable="true" ondragstart="drag(event)" id="v-a">a</div>
+        <div class="vocal-drag" draggable="true" ondragstart="drag(event)" id="v-e">e</div>
+        <div class="vocal-drag" draggable="true" ondragstart="drag(event)" id="v-i">i</div>
+        <div class="vocal-drag" draggable="true" ondragstart="drag(event)" id="v-o">o</div>
     </div>
 
     <div id="feedback"></div>
@@ -273,11 +319,10 @@
 
     <script>
         const listaEjercicios = [
-            { id: 1, incompleta: "_ rbol", correcta: "a", imagen: "https://cdn-icons-png.flaticon.com/512/489/489969.png" },
-            { id: 2, incompleta: "El_fante", correcta: "e", imagen: "https://cdn-icons-png.flaticon.com/512/3069/3069172.png" },
-            { id: 3, incompleta: "Ig_u_na", correcta: "i", imagen: "https://cdn-icons-png.flaticon.com/512/3069/3069186.png" },
-            { id: 4, incompleta: "_so", correcta: "o", imagen: "https://cdn-icons-png.flaticon.com/512/3069/3069224.png" },
-            { id: 5, incompleta: "_vas", correcta: "u", imagen: "https://cdn-icons-png.flaticon.com/512/3137/3137044.png" }
+            { id: 1, incompleta: "_ rbol", correcta: "a", imagen: "imagenes/arbol.png" },
+            { id: 2, incompleta: "El_fante", correcta: "e", imagen: "imagenes/elefante.png" },
+            { id: 3, incompleta: "Ig_u_na", correcta: "i", imagen: "imagenes/animales de tarjetas/iguana.png" },
+            { id: 4, incompleta: "_so", correcta: "o", imagen: "imagenes/animales de tarjetas/oso.png" }
         ];
 
         let puntos = 0;
@@ -289,6 +334,7 @@
         function cargarEjercicios() {
             const contenedor = document.getElementById("contenedor-ejercicios");
             contenedor.innerHTML = "";
+            document.getElementById("puntos-maximos").innerText = puntosMaximos;
 
             listaEjercicios.forEach(ejercicio => {
                 const cardDiv = document.createElement("div");
@@ -304,7 +350,7 @@
                     <button id="btn-${ejercicio.id}" class="btn-comprobar" onclick="comprobarRespuesta(${ejercicio.id})">
                         Comprobar
                     </button>
-                    <div id="mensaje-${ejercicio.id}" class="fw-bold mt-1" style="font-size: 0.9rem;"></div>
+                    <div id="mensaje-${ejercicio.id}" class="fw-bold mt-1" style="font-size: 0.85rem;"></div>
                 `;
                 contenedor.appendChild(cardDiv);
             });
@@ -312,21 +358,43 @@
 
         function construirHTMLPalabra(ejercicio) {
             const partes = ejercicio.incompleta.split("_");
-            return `${partes[0]}<input type="text" id="input-${ejercicio.id}" class="input-vocal" maxlength="1">${partes[1] || ''}`;
+            let html = partes[0] + `<div class="dropzone" id="drop-${ejercicio.id}" ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="drop(event, ${ejercicio.id})"></div>` + (partes[1] || '');
+            return html;
+        }
+
+        // Funciones de Drag and Drop
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.add("drag-over");
+        }
+
+        function removeDropStyle(ev) {
+            ev.currentTarget.classList.remove("drag-over");
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.innerText);
+        }
+
+        function drop(ev, id) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove("drag-over");
+            const data = ev.dataTransfer.getData("text");
+            ev.currentTarget.innerText = data;
         }
 
         function comprobarRespuesta(id) {
             const ejercicio = listaEjercicios.find(e => e.id === id);
-            const inputElem = document.getElementById(`input-${id}`);
+            const dropzoneElem = document.getElementById(`drop-${id}`);
             const mensajeElem = document.getElementById(`mensaje-${id}`);
             const btnElem = document.getElementById(`btn-${id}`);
             const feedbackGlobal = document.getElementById('feedback');
 
-            const respuestaUsuario = inputElem.value.trim().toLowerCase();
+            const respuestaUsuario = dropzoneElem.innerText.trim().toLowerCase();
 
             if (respuestaUsuario === "") {
                 mensajeElem.style.color = "#FF9800";
-                mensajeElem.innerText = "¡Escribe una vocal!";
+                mensajeElem.innerText = "¡Arrastra una vocal!";
                 return;
             }
 
@@ -337,13 +405,12 @@
                 feedbackGlobal.textContent = "¡Muy bien!";
                 feedbackGlobal.className = "correcto";
 
-                inputElem.disabled = true;
+                dropzoneElem.style.backgroundColor = "#d1e7dd";
                 btnElem.disabled = true;
-                cardDiv = inputElem.closest('.card-item');
-                cardDiv.classList.add('completed');
+                dropzoneElem.ondragover = null;
+                dropzoneElem.ondrop = null;
                 respondidos++;
 
-                // Efecto de confeti en cada acierto correcto
                 confetti({
                     particleCount: 50,
                     spread: 60,
@@ -355,7 +422,7 @@
                 mensajeElem.innerText = "¡Inténtalo de nuevo! ❌";
                 feedbackGlobal.textContent = "¡Sigue intentando!";
                 feedbackGlobal.className = "incorrecto";
-                inputElem.value = "";
+                dropzoneElem.innerText = "";
             }
 
             actualizarPuntaje();

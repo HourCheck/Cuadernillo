@@ -54,24 +54,6 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
 }
 
-.menu-button {
-  border: 0;
-  background: transparent;
-  color: #fff;
-  width: 58px;
-  height: 58px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  cursor: pointer;
-}
-
-.menu-button i {
-  font-size: 44px;
-  line-height: 1;
-}
-
 .brand-name {
   color: #fff;
   font-size: clamp(27px, 3vw, 38px);
@@ -95,48 +77,6 @@ body {
   width: 70px;
   height: 62px;
   object-fit: contain;
-}
-
-/* Menú */
-.menu-lateral {
-  width: 290px !important;
-  border: 0;
-}
-
-.menu-lateral .offcanvas-header {
-  background: var(--red);
-  color: #fff;
-}
-
-.menu-lateral .btn-close {
-  filter: brightness(0) invert(1);
-}
-
-.menu-lateral .offcanvas-title {
-  font-weight: 800;
-  font-size: 28px;
-}
-
-.menu-text {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 25px;
-}
-
-.menu-link {
-  display: block;
-  text-decoration: none;
-  color: #111;
-  font-size: 20px;
-  font-weight: 700;
-  padding: 13px 15px;
-  border-radius: 12px;
-  margin-bottom: 7px;
-}
-
-.menu-link:hover {
-  background: #f3f3f3;
-  color: var(--red);
 }
 
 /* Área principal */
@@ -416,34 +356,6 @@ body {
     </div>
 
   </nav>
-
-  <div class="offcanvas offcanvas-start menu-lateral" tabindex="-1" id="menuLateral" aria-labelledby="menuLateralLabel">
-
-    <div class="offcanvas-header">
-
-      <h5 class="offcanvas-title" id="menuLateralLabel">Cuadernillo</h5>
-
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-
-    </div>
-
-    <div class="offcanvas-body">
-
-      <p class="menu-text">¡Vamos a aprender jugando!</p>
-
-      <a href="index.html" class="menu-link">Inicio</a>
-
-      <a href="#" class="menu-link">Niveles</a>
-
-      <a href="basico.html" class="menu-link">Básico</a>
-
-      <a href="intermedio.html" class="menu-link">Intermedio</a>
-
-      <a href="avanzado.html" class="menu-link">Avanzado</a>
-
-    </div>
-
-  </div>
 
   <main id="inicio" class="main-content">
 

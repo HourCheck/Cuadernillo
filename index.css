@@ -1,9 +1,9 @@
 :root {
   --red: #c90d1d;
-  --blue-card: #d1fdfd;
-  --green-card: #7bd957;
-  --pink-card: #ed65bd;
-  --black: #050505;
+  --blue-card: #5882E8;
+  --green-card: #2A835F;
+  --pink-card: #ffadf8;
+     --black: #050505;
 }
 
 * {
@@ -83,22 +83,25 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: clamp(45px, 9vw, 105px);
+  /* Se redujo un poco el espacio entre tarjetas para darles más protagonismo */
+  gap: clamp(30px, 5vw, 60px); 
   position: relative;
   z-index: 10;
+  padding: 0 20px;
 }
 
 .level-card {
-  width: 207px;
-  height: 207px;
-  border-radius: 23px;
+  /* CAMBIO: Se amplió el ancho y alto para que el texto e imágenes queden cómodos */
+  width: 230px;
+  height: 230px;
+  border-radius: 26px;
   text-decoration: none;
   color: #000;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 43px;
+  padding: 35px 15px 0 15px; /* Padding horizontal para evitar que el texto toque los bordes */
   box-shadow: none;
   transition: transform .2s ease, box-shadow .2s ease;
 }
@@ -111,16 +114,19 @@ body {
 
 .level-card h2 {
   margin: 0;
-  font-size: 35px;
-  line-height: 1;
+  /* CAMBIO: Se ajustó el tamaño de fuente para que "Intermedio" no luzca apretado */
+  font-size: clamp(26px, 2.5vw, 32px); 
+  line-height: 1.2;
   font-weight: 800;
+  text-align: center;
+  white-space: nowrap; /* Evita que la palabra se rompa en dos líneas */
 }
 
 .level-card img {
-  width: 105px;
-  height: 105px;
+  width: 95px;
+  height: 95px;
   object-fit: contain;
-  margin-top: 12px;
+  margin-top: 15px;
 }
 
 .basic-card {
@@ -199,21 +205,22 @@ body {
 /* Responsive */
 @media (max-width: 900px) {
   .levels-row {
-    gap: 22px;
+    gap: 20px;
   }
 
   .level-card {
-    width: 190px;
-    height: 190px;
+    width: 200px;
+    height: 200px;
+    padding-top: 28px;
   }
 
   .level-card h2 {
-    font-size: 30px;
+    font-size: 26px;
   }
 
   .level-card img {
-    width: 92px;
-    height: 92px;
+    width: 80px;
+    height: 80px;
   }
 
   .decor-bird {
@@ -232,15 +239,6 @@ body {
 
   .brand-name {
     font-size: 27px;
-  }
-
-  .menu-button {
-    width: 48px;
-    height: 48px;
-  }
-
-  .menu-button i {
-    font-size: 36px;
   }
 
   .logo-circle {
@@ -272,19 +270,19 @@ body {
   }
 
   .level-card {
-    width: min(80vw, 250px);
-    height: 165px;
-    padding-top: 24px;
+    width: min(85vw, 260px);
+    height: 175px;
+    padding-top: 22px;
   }
 
   .level-card h2 {
-    font-size: 30px;
+    font-size: 28px;
   }
 
   .level-card img {
     width: 75px;
     height: 75px;
-    margin-top: 8px;
+    margin-top: 10px;
   }
 
   .decor-bird {

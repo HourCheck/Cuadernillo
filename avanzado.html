@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nivel Avanzado - Memoria de Vocales</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel Avanzado - Memoria de Vocales</title>
+     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
     <!-- Librería de Confeti para el efecto de fiesta -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-  <style>
-   body {
+    <style>
+        body {
             font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
             background: linear-gradient(135deg, white 0%, white 100%);
             color: #333;
@@ -18,29 +17,29 @@
             flex-direction: column;
         }
 
-  .navbar {
+        .navbar {
             background-color: #ffffff;
             border-bottom: 4px solid lightcoral;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-  .navbar-brand {
+        .navbar-brand {
             color: #ab47bc !important;
             font-weight: bold;
             font-size: 1.6rem;
         }
 
-   .nav-link {
+        .nav-link {
             color: #4a148c !important;
             font-weight: bold;
         }
 
-    .nav-link:hover, .nav-link.active {
+        .nav-link:hover, .nav-link.active {
             color: #ab47bc !important;
         }
 
         /* Tablero amplio para cartas grandes (5 columnas) */
-    .game-board {
+        .game-board {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 20px;
@@ -49,7 +48,7 @@
         }
 
         /* Estilo de las tarjetas (Mucho más grandes y cómodas) */
-     .card-item {
+        .card-item {
             background-color: white;
             border: 6px solid lightcoral; /* Borde verde brillante */
             border-radius: 30px;
@@ -67,12 +66,12 @@
             user-select: none;
         }
 
-    .card-item:hover {
+        .card-item:hover {
             transform: scale(1.05);
         }
 
         /* Estado inicial de la carta oculta */
-     .card-item.oculta {
+        .card-item.oculta {
             background-color: pink;
             border-color: lightcoral;
             color: white;
@@ -80,7 +79,7 @@
         }
 
         /* Contenedor interno de la imagen más grande */
-    .card-image-container {
+        .card-image-container {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -90,14 +89,14 @@
             border-radius: 20px;
         }
 
-    .card-image-container img {
+        .card-image-container img {
             width: 120px; /* Imagen grande de 120px */
             height: 120px;
             object-fit: contain;
         }
 
         /* Texto de la tarjeta grande y legible */
-    .texto-carta {
+        .texto-carta {
             font-size: 1.2rem;
             font-weight: bold;
             margin-top: 10px;
@@ -105,7 +104,7 @@
             text-align: center;
         }
 
-     footer {
+        footer {
             background-color: #4a148c;
             color: white;
             text-align: center;
@@ -129,3 +128,181 @@
             }
         }
     </style>
+</head>
+<body>
+
+      <header>
+        <!-- Corregido el botón para que sea un enlace funcional -->
+        <a class="back-btn" href="index.html" aria-label="Volver atrás">
+            <i class="back-arrow"></i>
+        </a>
+        <h1 class="header-title">Nivel Avanzado</h1>
+        <div class="header-spacer"></div>
+    </header>
+
+
+    <!-- REPRODUCTORES DE AUDIO OCULTOS -->
+    <audio id="audio-clic" src="clickboton.mp3" preload="auto"></audio>
+    <audio id="audio-correcto" src="correcto.mp3" preload="auto"></audio>
+    <audio id="audio-error" src="errorr.mp3" preload="auto"></audio>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container my-5 text-center">
+        <!-- Tablero del juego -->
+        <div class="game-board mb-4" id="tablero"></div>
+
+        <!-- Mensaje de éxito -->
+        <div id="mensaje-ganador" class="fs-3 fw-bold text-success mt-3"></div>
+        <button id="btn-reiniciar" class="btn btn-warning btn-lg fw-bold mt-3 d-none" onclick="reiniciarJuego()">¡Jugar de Nuevo! 🔄</button>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p class="mb-0">Proyecto Educativo: Aprendiendo las Vocales &copy; 2026</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT COMENTADO -->
+    <script>
+        // 1. Datos de las cartas
+        const cartasData = [
+            { id: 'A1', pareja: 'A', tipo: 'imagen', contenido: 'ardilla.jpg', texto: 'Ardilla' },
+            { id: 'A1_img', pareja: 'A', tipo: 'imagen', contenido: 'avion.jpg', texto: 'Avión' },
+            
+            { id: 'E1', pareja: 'E', tipo: 'imagen', contenido: 'estrella.jpg', texto: 'Estrella' },
+            { id: 'E1_img', pareja: 'E', tipo: 'imagen', contenido: 'elefante.jpg', texto: 'Elefante' },
+
+            { id: 'I1', pareja: 'I', tipo: 'imagen', contenido: 'iglu.jpg', texto: 'Iglú' },
+            { id: 'I1_img', pareja: 'I', tipo: 'imagen', contenido: 'iguana.jpg', texto: 'Iguana' },
+
+            { id: 'O1', pareja: 'O', tipo: 'imagen', contenido: 'oveja.jpg', texto: 'Oveja' },
+            { id: 'O1_img', pareja: 'O', tipo: 'imagen', contenido: 'oso.jpg', texto: 'Oso' },
+
+            { id: 'U1', pareja: 'U', tipo: 'imagen', contenido: 'unicornio.jpg', texto: 'Unicornio' },
+            { id: 'U1_img', pareja: 'U', tipo: 'imagen', contenido: 'uva.jpg', texto: 'Uva' }
+        ];
+
+        let primeraCarta = null;
+        let segundaCarta = null;
+        let bloqueoTablero = false;
+        let parejasEncontradas = 0;
+
+        const audioClic = document.getElementById("audio-clic");
+        const audioCorrecto = document.getElementById("audio-correcto");
+        const audioError = document.getElementById("audio-error");
+
+        // 2. Barajar cartas
+        function barajarCartas() {
+            for (let i = cartasData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cartasData[i], cartasData[j]] = [cartasData[j], cartasData[i]];
+            }
+        }
+
+        // 3. Crear tablero grande
+        function crearTablero() {
+            const tablero = document.getElementById("tablero");
+            tablero.innerHTML = "";
+            barajarCartas();
+
+            for (let i = 0; i < cartasData.length; i++) {
+                const carta = document.createElement("div");
+                carta.classList.add("card-item", "oculta");
+                carta.dataset.pareja = cartasData[i].pareja;
+                carta.dataset.tipo = cartasData[i].tipo;
+                carta.dataset.contenido = cartasData[i].contenido;
+                carta.dataset.texto = cartasData[i].texto;
+                
+                carta.innerText = "❓";
+                
+                carta.addEventListener("click", voltearCarta);
+                tablero.appendChild(carta);
+            }
+        }
+
+        // 4. Voltear carta
+        function voltearCarta() {
+            if (bloqueoTablero) return;
+            if (this === primeraCarta) return;
+            if (!this.classList.contains("oculta")) return;
+
+            audioClic.currentTime = 0;
+            audioClic.play();
+
+            this.classList.remove("oculta");
+
+            if (this.dataset.tipo === "imagen") {
+                this.innerHTML = `
+                    <div class="card-image-container">
+                        <img src="${this.dataset.contenido}" alt="${this.dataset.texto}">
+                    </div>
+                    <span class="texto-carta">${this.dataset.texto}</span>
+                `;
+            } else {
+                this.innerHTML = `
+                    <div class="card-image-container" style="font-size: 3.5rem; font-weight: bold; color: #4a148c; height: 120px;">
+                        ${this.dataset.contenido}
+                    </div>
+                    <span class="texto-carta">${this.dataset.texto}</span>
+                `;
+            }
+
+            if (!primeraCarta) {
+                primeraCarta = this;
+                return;
+            }
+
+            segundaCarta = this;
+            verificarPareja();
+        }
+
+        // 5. Verificar parejas
+        function verificarPareja() {
+            let coincide = primeraCarta.dataset.pareja === segundaCarta.dataset.pareja;
+
+            if (coincide) {
+                audioCorrecto.currentTime = 0;
+                audioCorrecto.play();
+
+                parejasEncontradas++;
+                resetearSeleccion();
+
+                if (parejasEncontradas === 5) {
+                    document.getElementById("instruccion").innerText = "🎉 ¡Excelente trabajo! Uniste todas las vocales con sus dibujos correctamente.";
+                    document.getElementById("mensaje-ganador").innerText = "🌟 ¡Lo hiciste increíble! 🌟";
+                    document.getElementById("btn-reiniciar").classList.remove("d-none");
+                }
+            } else {
+                audioError.currentTime = 0;
+                audioError.play();
+
+                bloqueoTablero = true;
+                setTimeout(() => {
+                    primeraCarta.classList.add("oculta");
+                    primeraCarta.innerText = "❓";
+                    segundaCarta.classList.add("oculta");
+                    segundaCarta.innerText = "❓";
+                    resetearSeleccion();
+                }, 1200);
+            }
+        }
+
+        function resetearSeleccion() {
+            primeraCarta = null;
+            segundaCarta = null;
+            bloqueoTablero = false;
+        }
+
+        function reiniciarJuego() {
+            parejasEncontradas = 0;
+            document.getElementById("mensaje-ganador").innerText = "";
+            document.getElementById("instruccion").innerText = "Descubre las cartas y une cada vocal con su imagen y palabra correspondiente.";
+            document.getElementById("btn-reiniciar").classList.add("d-none");
+            crearTablero();
+        }
+
+        crearTablero();
+    </script>
+</body>
+</html>

@@ -213,9 +213,10 @@
 <body>
 
     <header>
-        <button class="back-btn" href="index.html" aria-label="Volver atrás">
+        <!-- Corregido el botón para que sea un enlace funcional -->
+        <a class="back-btn" href="index.html" aria-label="Volver atrás">
             <i class="back-arrow"></i>
-        </button>
+        </a>
         <h1 class="header-title">Nivel Básico</h1>
         <div class="header-spacer"></div>
     </header>
@@ -269,14 +270,15 @@
                 <img src="imagenes/sonidovector.png" alt="Reproducir audio">
             </button>
 
-              <!-- Pareja 4: urraca -->
+            <!-- Pareja 5: Urraca -->
             <div id="card-urraca" class="card-item hidden" onclick="tocarElemento('Urraca', 'tarjeta')">
                 <div class="card-image-container">
                     <img src="imagenes/animales de tarjetas/urraca.png" alt="urraca">
                 </div>
                 <div class="card-label">Urraca</div>
             </div>
-            <button id="audio-oso" class="card-audio hidden" onclick="tocarElemento('Oso', 'audio')">
+            <!-- Corregido el ID y la función para que apunten a Urraca -->
+            <button id="audio-urraca" class="card-audio hidden" onclick="tocarElemento('Urraca', 'audio')">
                 <img src="imagenes/sonidovector.png" alt="Reproducir audio">
             </button>
 
@@ -288,17 +290,16 @@
     <div id="feedback"></div>
 
     <script>
-        const parejas = ['Abeja', 'Iguana', 'Elefante', 'Oso'];
+        // Agregada 'Urraca' al arreglo de parejas para que el juego la reconozca
+        const parejas = ['Abeja', 'Iguana', 'Elefante', 'Oso', 'Urraca'];
         let indiceActual = 0;
 
-        // Objeto para llevar el control de qué partes ha tocado el usuario en la pareja actual
         let progresoPareja = {
             tarjetaTocada: false,
             audioTocado: false
         };
 
         function tocarElemento(palabra, tipo) {
-            // Validar si pertenece a la pareja actual
             if (palabra.toLowerCase() !== parejas[indiceActual].toLowerCase()) {
                 return;
             }
@@ -306,7 +307,6 @@
             const feedback = document.getElementById('feedback');
             const nombreLower = palabra.toLowerCase();
 
-            // Reproducir sonido de voz
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(palabra);
                 utterance.lang = 'es-ES';
@@ -314,7 +314,6 @@
                 window.speechSynthesis.speak(utterance);
             }
 
-            // Marcar qué parte tocó
             if (tipo === 'tarjeta' && !progresoPareja.tarjetaTocada) {
                 progresoPareja.tarjetaTocada = true;
                 document.getElementById(`card-${nombreLower}`).classList.add('completed');
@@ -323,24 +322,20 @@
                 document.getElementById(`audio-${nombreLower}`).classList.add('completed');
             }
 
-            // Verificar si ya tocó AMBOS elementos de esta pareja
             if (progresoPareja.tarjetaTocada && progresoPareja.audioTocado) {
                 feedback.textContent = '¡Excelente!';
                 feedback.className = 'correcto';
 
-                // Lanzar efecto de fiesta
                 confetti({
                     particleCount: 100,
                     spread: 70,
                     origin: { y: 0.6 }
                 });
 
-                // Pasar a la siguiente pareja después de un momento
                 setTimeout(() => {
                     ocultarPareja(parejas[indiceActual]);
                     indiceActual++;
 
-                    // Reiniciar el progreso para la nueva pareja
                     progresoPareja.tarjetaTocada = false;
                     progresoPareja.audioTocado = false;
 
@@ -352,7 +347,6 @@
                     }
                 }, 1500);
             } else {
-                // Mensaje intermedio si solo tocó uno de los dos
                 feedback.textContent = `¡Muy bien! Ahora toca el otro elemento de ${palabra}.`;
                 feedback.className = 'correcto';
             }

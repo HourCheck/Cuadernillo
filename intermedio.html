@@ -54,7 +54,7 @@
 
     <script>
         const listaEjercicios = [
-            { id: 1, incompleta: "_ lpaca", correcta: "a", imagen: "imagenesNOBG/1-removebg-preview.png" },
+            { id: 1, incompleta: "_ lpaca", correcta: "a", imagen: "imagenesNOBG/1-removebg-preview.png", claseImagen: "img-alpaca" },
             { id: 2, incompleta: "El_fante", correcta: "e", imagen: "imagenes/elefante.png" },
             { id: 3, incompleta: "_guana", correcta: "i", imagen: "imagenes/animales de tarjetas/iguana.png" },
             { id: 4, incompleta: "_so", correcta: "o", imagen: "imagenes/animales de tarjetas/oso.png" }
@@ -77,7 +77,7 @@
 
                 cardDiv.innerHTML = `
                     <div class="card-image-container">
-                        <img src="${ejercicio.imagen}" alt="Objeto">
+                        <img src="${ejercicio.imagen}" alt="Objeto" class="${ejercicio.claseImagen || ''}">
                     </div>
                     <div class="palabra-incompleta">
                         ${construirHTMLPalabra(ejercicio)}

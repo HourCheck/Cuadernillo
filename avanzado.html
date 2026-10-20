@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
     <!-- Librería de Confeti para el efecto de fiesta -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-       <link rel="stylesheet" href="avanzado.css">
+    <link rel="stylesheet" href="avanzado.css">
 </head>
 <body>
 
@@ -28,6 +28,9 @@
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="container my-5 text-center">
+        <!-- Instrucción añadida para que el script la reconozca -->
+        <p class="fs-5 text-secondary mb-4" id="instruccion">Descubre las cartas y encuentra las parejas de cada vocal.</p>
+
         <!-- Tablero del juego -->
         <div class="game-board mb-4" id="tablero"></div>
 
@@ -39,22 +42,22 @@
 
     <!-- JAVASCRIPT COMENTADO -->
     <script>
-        // 1. Datos de las cartas
+        // 1. Datos de las cartas (Agrupadas correctamente por parejas de cada vocal)
         const cartasData = [
             { id: 'A1', pareja: 'A', tipo: 'imagen', contenido: 'ardillag.jpg', texto: 'Ardilla' },
-            { id: 'A1_img', pareja: 'A', tipo: 'imagen', contenido: 'aviong.jpg', texto: 'Avión' },
+            { id: 'A2', pareja: 'A', tipo: 'imagen', contenido: 'aviong.jpg', texto: 'Avión' },
             
             { id: 'E1', pareja: 'E', tipo: 'imagen', contenido: 'estrellag.jpg', texto: 'Estrella' },
-            { id: 'E1_img', pareja: 'E', tipo: 'imagen', contenido: 'elefanteg.jpg', texto: 'Elefante' },
+            { id: 'E2', pareja: 'E', tipo: 'imagen', contenido: 'elefanteg.jpg', texto: 'Elefante' },
 
             { id: 'I1', pareja: 'I', tipo: 'imagen', contenido: 'iglug.jpg', texto: 'Iglú' },
-            { id: 'I1_img', pareja: 'I', tipo: 'imagen', contenido: 'iguanag.jpg', texto: 'Iguana' },
+            { id: 'I2', pareja: 'I', tipo: 'imagen', contenido: 'iguanag.jpg', texto: 'Iguana' },
 
             { id: 'O1', pareja: 'O', tipo: 'imagen', contenido: 'ovejag.jpg', texto: 'Oveja' },
-            { id: 'O1_img', pareja: 'O', tipo: 'imagen', contenido: 'osog.jpg', texto: 'Oso' },
+            { id: 'O2', pareja: 'O', tipo: 'imagen', contenido: 'osog.jpg', texto: 'Oso' },
 
             { id: 'U1', pareja: 'U', tipo: 'imagen', contenido: 'unicorniog.jpg', texto: 'Unicornio' },
-            { id: 'U1_img', pareja: 'U', tipo: 'imagen', contenido: 'uvag.jpg', texto: 'Uva' }
+            { id: 'U2', pareja: 'U', tipo: 'imagen', contenido: 'uvag.jpg', texto: 'Uva' }
         ];
 
         let primeraCarta = null;
@@ -66,7 +69,7 @@
         const audioCorrecto = document.getElementById("audio-correcto");
         const audioError = document.getElementById("audio-error");
 
-        // 2. Barajar cartas
+        // 2. Barajar cartas usando bucles
         function barajarCartas() {
             for (let i = cartasData.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -141,6 +144,13 @@
 
                 parejasEncontradas++;
                 resetearSeleccion();
+
+                // Efecto de confeti al encontrar una pareja
+                confetti({
+                    particleCount: 70,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
 
                 if (parejasEncontradas === 5) {
                     document.getElementById("instruccion").innerText = "🎉 ¡Excelente trabajo! Uniste todas las vocales con sus dibujos correctamente.";

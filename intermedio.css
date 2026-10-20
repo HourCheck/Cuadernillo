@@ -74,10 +74,19 @@
         }
 
         .mascot-left, .mascot-right {
-            width: 260px;
+            width: 320px;
             height: auto;
             object-fit: contain;
         }
+
+/* desplazamiento individual */
+.mascot-left {
+    transform: translateX(-40px); /* Mueve el tigre más a la izquierda */
+}
+
+.mascot-right {
+    transform: translateX(40px); /* Mueve el león más a la derecha */
+}
 
         .cards-grid {
             display: grid;

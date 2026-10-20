@@ -11,15 +11,14 @@
 </head>
 <body>
 
-      <header>
-        <!-- Botón Corregido -->
+    <header>
+        <!-- Enlace al menú principal -->
         <a class="back-btn" href="index.html" aria-label="Volver atrás">
             <i class="back-arrow"></i>
         </a>
         <h1 class="header-title">Nivel Avanzado</h1>
         <div class="header-spacer"></div>
     </header>
-
 
     <!-- REPRODUCTORES DE AUDIO -->
     <audio id="audio-clic" src="clickboton.mp3" preload="auto"></audio>
@@ -29,7 +28,7 @@
     <!-- CONTENIDO PRINCIPAL -->
     <main class="container my-5 text-center">
         <!-- Instrucción -->
-        <p class="fs-5 text-secondary mb-4" id="instruccion">Descubre las cartas y encuentra las parejas de cada vocal.</p>
+        <p class="fs-5 text-secondary mb-4" id="instruccion">Descubre las cartas y encuentra la pareja de cada vocal con su animal correspondiente.</p>
 
         <!-- Tablero del juego -->
         <div class="game-board mb-4" id="tablero"></div>
@@ -39,25 +38,29 @@
         <button id="btn-reiniciar" class="btn btn-warning btn-lg fw-bold mt-3 d-none" onclick="reiniciarJuego()">¡Jugar de Nuevo!</button>
     </main>
 
-
-    <!-- JAVASCRIPT  -->
+    <!-- JAVASCRIPT -->
     <script>
-        //  Datos de las cartas
+        // Datos de las cartas: Parejas Letra (vocal) - Animal
         const cartasData = [
-            { id: 'A1', pareja: 'A', tipo: 'imagen', contenido: 'imagenes/ardilla.jpg', texto: 'ARDILLA' },
-            { id: 'A2', pareja: 'A', tipo: 'imagen', contenido: 'imagenes/avion.jpg', texto: 'AVIÓN' },
+            // Vocal A - Abeja
+            { id: 'A_letra', pareja: 'A', tipo: 'texto', contenido: 'A', texto: 'Vocal A' },
+            { id: 'A_animal', pareja: 'A', tipo: 'imagen', contenido: 'imagenes/abeja.png', texto: 'Abeja' },
             
-            { id: 'E1', pareja: 'E', tipo: 'imagen', contenido: 'imagenes/elefante.png', texto: 'ELEFANTE' },
-            { id: 'E2', pareja: 'E', tipo: 'imagen', contenido: '??.jpg', texto: '??' },
+            // Vocal E - Elefante
+            { id: 'E_letra', pareja: 'E', tipo: 'texto', contenido: 'E', texto: 'Vocal E' },
+            { id: 'E_animal', pareja: 'E', tipo: 'imagen', contenido: 'imagenes/elefante.png', texto: 'Elefante' },
 
-            { id: 'I1', pareja: 'I', tipo: 'imagen', contenido: 'imagenes/animales de tarjeta/iguana.png', texto: 'IGUANA' },
-            { id: 'I2', pareja: 'I', tipo: 'imagen', contenido: '??', texto: '??' },
+            // Vocal I - Iguana
+            { id: 'I_letra', pareja: 'I', tipo: 'texto', contenido: 'I', texto: 'Vocal I' },
+            { id: 'I_animal', pareja: 'I', tipo: 'imagen', contenido: 'imagenes/animales de tarjetas/iguana.png', texto: 'Iguana' },
 
-            { id: 'O1', pareja: 'O', tipo: 'imagen', contenido: 'ovejag.jpg', texto: 'OVEJA' },
-            { id: 'O2', pareja: 'O', tipo: 'imagen', contenido: 'imagenes/animales de tarjeta/oso.png', texto: 'OSO' },
+            // Vocal O - Oso
+            { id: 'O_letra', pareja: 'O', tipo: 'texto', contenido: 'O', texto: 'Vocal O' },
+            { id: 'O_animal', pareja: 'O', tipo: 'imagen', contenido: 'imagenes/animales de tarjetas/oso.png', texto: 'Oso' },
 
-            { id: 'U1', pareja: 'U', tipo: 'imagen', contenido: '??', texto: '??' },
-            { id: 'U2', pareja: 'U', tipo: 'imagen', contenido: 'imagenes/animales de tarjetas/urraca.png', texto: 'URRACA' }
+            // Vocal U - Urraca
+            { id: 'U_letra', pareja: 'U', tipo: 'texto', contenido: 'U', texto: 'Vocal U' },
+            { id: 'U_animal', pareja: 'U', tipo: 'imagen', contenido: 'imagenes/animales de tarjetas/urraca.png', texto: 'Urraca' }
         ];
 
         let primeraCarta = null;
@@ -65,11 +68,11 @@
         let bloqueoTablero = false;
         let parejasEncontradas = 0;
 
-        const audioClic = document.getElementById("clickboton.mp3");
-        const audioCorrecto = document.getElementById("correcto.mp3");
-        const audioError = document.getElementById("error.mp3");
+        const audioClic = document.getElementById("audio-clic");
+        const audioCorrecto = document.getElementById("audio-correcto");
+        const audioError = document.getElementById("audio-error");
 
-        //  Barajar cartas
+        // Barajar cartas
         function barajarCartas() {
             for (let i = cartasData.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -104,8 +107,10 @@
             if (this === primeraCarta) return;
             if (!this.classList.contains("oculta")) return;
 
-            audioClic.currentTime = 0;
-            audioClic.play();
+            if (audioClic) {
+                audioClic.currentTime = 0;
+                audioClic.play().catch(() => {});
+            }
 
             this.classList.remove("oculta");
 
@@ -118,7 +123,7 @@
                 `;
             } else {
                 this.innerHTML = `
-                    <div class="card-image-container" style="font-size: 3.5rem; font-weight: bold; color: #4a148c; height: 120px;">
+                    <div class="card-image-container" style="font-size: 3.5rem; font-weight: bold; color: #4eb670; display: flex; align-items: center; justify-content: center; height: 100px;">
                         ${this.dataset.contenido}
                     </div>
                     <span class="texto-carta">${this.dataset.texto}</span>
@@ -134,18 +139,20 @@
             verificarPareja();
         }
 
-        //  Verificar parejas
+        // Verificar parejas
         function verificarPareja() {
             let coincide = primeraCarta.dataset.pareja === segundaCarta.dataset.pareja;
 
             if (coincide) {
-                audioCorrecto.currentTime = 0;
-                audioCorrecto.play();
+                if (audioCorrecto) {
+                    audioCorrecto.currentTime = 0;
+                    audioCorrecto.play().catch(() => {});
+                }
 
                 parejasEncontradas++;
                 resetearSeleccion();
 
-                // Efecto de confeti al encontrar una pareja
+                // Efecto de confeti
                 confetti({
                     particleCount: 70,
                     spread: 60,
@@ -153,13 +160,22 @@
                 });
 
                 if (parejasEncontradas === 5) {
-                    document.getElementById("instruccion").innerText = "¡Correcto!🎉";
-                    document.getElementById("mensaje-ganador").innerText = "¡Muy bien!";
+                    document.getElementById("instruccion").innerText = "🎉 ¡Felicidades! 🎉";
+                    document.getElementById("mensaje-ganador").innerText = "¡Encontraste todas las parejas de vocales!";
                     document.getElementById("btn-reiniciar").classList.remove("d-none");
+
+                    // Ráfaga final de celebración
+                    confetti({
+                        particleCount: 150,
+                        spread: 100,
+                        origin: { y: 0.5 }
+                    });
                 }
             } else {
-                audioError.currentTime = 0;
-                audioError.play();
+                if (audioError) {
+                    audioError.currentTime = 0;
+                    audioError.play().catch(() => {});
+                }
 
                 bloqueoTablero = true;
                 setTimeout(() => {
@@ -181,12 +197,12 @@
         function reiniciarJuego() {
             parejasEncontradas = 0;
             document.getElementById("mensaje-ganador").innerText = "";
-            document.getElementById("instruccion").innerText = "Descubre las cartas y une cada vocal con su imagen y palabra correspondiente.";
+            document.getElementById("instruccion").innerText = "Descubre las cartas y encuentra la pareja de cada vocal con su animal correspondiente.";
             document.getElementById("btn-reiniciar").classList.add("d-none");
             crearTablero();
         }
 
-        crearTablero();
+        window.onload = crearTablero;
     </script>
 </body>
 </html>

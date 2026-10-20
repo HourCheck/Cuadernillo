@@ -245,22 +245,38 @@ header {
     text-align: center;
     margin: 20px auto;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.btn-repetir {
-    background-color: #4eb670;
-    color: white;
+/* Botón Rojo Grande "Siguiente Nivel" */
+.btn-siguiente-nivel {
+    display: inline-block;
+    background-color: #ff3b30;
+    color: #ffffff;
+    font-size: 1.4rem;
     font-weight: 700;
-    border-radius: 15px;
-    border: none;
-    padding: 12px 25px;
-    font-size: 1.2rem;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 18px rgba(255, 59, 48, 0.4);
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.btn-repetir:hover {
-    background-color: #4eb670;
+.btn-siguiente-nivel:hover {
+    background-color: #e03126;
+    transform: scale(1.05);
+    box-shadow: 0 10px 22px rgba(255, 59, 48, 0.5);
+}
+
+.btn-siguiente-nivel:active {
+    transform: scale(0.98);
+}
+
+.mt-3 {
+    margin-top: 1rem;
 }
 
 @media (max-width: 900px) {

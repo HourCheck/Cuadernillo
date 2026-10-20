@@ -74,7 +74,7 @@
         }
 
         .mascot-left, .mascot-right {
-            width: 320px;
+            width: 260px;
             height: auto;
             object-fit: contain;
         }

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel Básico - Aprendiendo las Vocales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Librería de Confeti para el efecto de fiesta -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="basico.css">
+</head>
+<body>
+
+    <header>
+        <a class="back-btn" href="index.html" aria-label="Volver atrás">
+            <i class="back-arrow"></i>
+        </a>
+        <h1 class="header-title">Nivel Básico</h1>
+        <div class="header-spacer"></div>
+    </header>
+
+    <div class="game-container">
+        <img src="imagenes/tigrebailando.png" alt="Tigre animado" class="mascot-left">
+
+        <div class="cards-grid">
+            
+            <!-- Pareja 1: Abeja -->
+            <div id="card-abeja" class="card-item" onclick="tocarElemento('Abeja', 'tarjeta')">
+                <div class="card-image-container">
+                    <img src="imagenes/abeja.png" alt="Abeja">
+                </div>
+                <div class="card-label">Abeja</div>
+            </div>
+            <button id="audio-abeja" class="card-audio" onclick="tocarElemento('Abeja', 'audio')">
+                <img src="imagenesNOBG/2-removebg-preview.png" alt="Reproducir audio" style="height: 300px; width:300px ;">
+            </button>
+
+            <!-- Pareja 2: Iguana -->
+            <div id="card-iguana" class="card-item hidden" onclick="tocarElemento('Iguana', 'tarjeta')">
+                <div class="card-image-container">
+                    <img src="imagenes/animales de tarjetas/iguana.png" alt="iguana">
+                </div>
+                <div class="card-label">Iguana</div>
+            </div>
+            <button id="audio-iguana" class="card-audio hidden" onclick="tocarElemento('Iguana', 'audio')">
+                <img src="imagenesNOBG/2-removebg-preview.png" alt="Reproducir audio" style="height: 300px; width:300px ;">
+            </button>
+
+            <!-- Pareja 3: Elefante -->
+            <div id="card-elefante" class="card-item hidden" onclick="tocarElemento('Elefante', 'tarjeta')">
+                <div class="card-image-container">
+                    <img src="imagenes/elefante.png" alt="Elefante">
+                </div>
+                <div class="card-label">Elefante</div>
+            </div>
+            <button id="audio-elefante" class="card-audio hidden" onclick="tocarElemento('Elefante', 'audio')">
+                <img src="imagenesNOBG/2-removebg-preview.png" alt="Reproducir audio" style="height: 300px; width:300px ;">
+            </button>
+
+            <!-- Pareja 4: Oso -->
+            <div id="card-oso" class="card-item hidden" onclick="tocarElemento('Oso', 'tarjeta')">
+                <div class="card-image-container">
+                    <img src="https://i.etsystatic.com/52564588/r/il/009f1f/6773420994/il_570xN.6773420994_th59.jpg" alt="Oso">
+                </div>
+                <div class="card-label">Oso</div>
+            </div>
+            <button id="audio-oso" class="card-audio hidden" onclick="tocarElemento('Oso', 'audio')">
+                <img src="imagenesNOBG/2-removebg-preview.png" alt="Reproducir audio" style="height: 300px; width:300px ;">
+            </button>
+
+            <!-- Pareja 5: Urraca -->
+            <div id="card-urraca" class="card-item hidden" onclick="tocarElemento('Urraca', 'tarjeta')">
+                <div class="card-image-container">
+                    <img src="imagenes/animales de tarjetas/urraca.png" alt="urraca">
+                </div>
+                <div class="card-label">Urraca</div>
+            </div>
+            <button id="audio-urraca" class="card-audio hidden" onclick="tocarElemento('Urraca', 'audio')">
+                <img src="imagenes/sonidovector.png" alt="Reproducir audio">
+            </button>
+
+        </div>
+
+        <img src="imagenes/leonbailando.png" alt="León animado" class="mascot-right">
+    </div>
+
+    <div id="feedback"></div>
+
+    <!-- Pantalla Final de Felicitaciones -->
+    <div id="pantalla-final" class="final-container hidden">
+        <div class="final-emoji">🎉😊🌟</div>
+        <h2 class="final-titulo">¡Felicidades!</h2>
+        <p class="final-subtitulo">Completaste con éxito el Nivel Básico</p>
+        <a href="intermedio.html" class="btn-siguiente-nivel">Siguiente Nivel</a>
+    </div>
+
+    <script>
+        const parejas = ['Abeja', 'Iguana', 'Elefante', 'Oso', 'Urraca'];
+        let indiceActual = 0;
+
+        let progresoPareja = {
+            tarjetaTocada: false,
+            audioTocado: false
+        };
+
+        function tocarElemento(palabra, tipo) {
+            if (palabra.toLowerCase() !== parejas[indiceActual].toLowerCase()) {
+                return;
+            }
+
+            const feedback = document.getElementById('feedback');
+            const nombreLower = palabra.toLowerCase();
+
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(palabra);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+
+            if (tipo === 'tarjeta' && !progresoPareja.tarjetaTocada) {
+                progresoPareja.tarjetaTocada = true;
+                document.getElementById(`card-${nombreLower}`).classList.add('completed');
+            } else if (tipo === 'audio' && !progresoPareja.audioTocado) {
+                progresoPareja.audioTocado = true;
+                document.getElementById(`audio-${nombreLower}`).classList.add('completed');
+            }
+
+            if (progresoPareja.tarjetaTocada && progresoPareja.audioTocado) {
+                feedback.textContent = '¡Excelente!';
+                feedback.className = 'correcto';
+
+                confetti({
+                    particleCount: 80,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
+
+                setTimeout(() => {
+                    ocultarPareja(parejas[indiceActual]);
+                    indiceActual++;
+
+                    progresoPareja.tarjetaTocada = false;
+                    progresoPareja.audioTocado = false;
+
+                    if (indiceActual < parejas.length) {
+                        mostrarPareja(parejas[indiceActual]);
+                        feedback.textContent = '';
+                    } else {
+                        feedback.textContent = '';
+                        mostrarPantallaFinal();
+                    }
+                }, 1200);
+            } else {
+                feedback.textContent = `¡Muy bien! Ahora toca el otro elemento de ${palabra}.`;
+                feedback.className = 'correcto';
+            }
+        }
+
+        function ocultarPareja(nombre) {
+            const card = document.getElementById(`card-${nombre.toLowerCase()}`);
+            const audio = document.getElementById(`audio-${nombre.toLowerCase()}`);
+            if (card) {
+                card.classList.add('hidden');
+                card.classList.remove('completed');
+            }
+            if (audio) {
+                audio.classList.add('hidden');
+                audio.classList.remove('completed');
+            }
+        }
+
+        function mostrarPareja(nombre) {
+            const card = document.getElementById(`card-${nombre.toLowerCase()}`);
+            const audio = document.getElementById(`audio-${nombre.toLowerCase()}`);
+            if (card) card.classList.remove('hidden');
+            if (audio) audio.classList.remove('hidden');
+        }
+
+        function mostrarPantallaFinal() {
+            const pantallaFinal = document.getElementById('pantalla-final');
+            pantallaFinal.classList.remove('hidden');
+
+            // Lanzamiento masivo de confeti inicial
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.5 }
+            });
+
+            // Rafagas continuas de confeti por 3 segundos
+            const duracion = 3000;
+            const fin = Date.now() + duracion;
+
+            const intervalo = setInterval(function() {
+                if (Date.now() > fin) {
+                    return clearInterval(intervalo);
+                }
+
+                confetti({
+                    startVelocity: 30,
+                    spread: 360,
+                    ticks: 60,
+                    origin: { x: Math.random(), y: Math.random() - 0.2 }
+                });
+            }, 250);
+
+            pantallaFinal.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

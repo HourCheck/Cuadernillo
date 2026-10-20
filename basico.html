@@ -13,7 +13,6 @@
 <body>
 
     <header>
-        <!-- Corregido el botón para que sea un enlace funcional -->
         <a class="back-btn" href="index.html" aria-label="Volver atrás">
             <i class="back-arrow"></i>
         </a>
@@ -77,10 +76,17 @@
                 </div>
                 <div class="card-label">Urraca</div>
             </div>
-            <!-- Corregido el ID y la función para que apunten a Urraca -->
             <button id="audio-urraca" class="card-audio hidden" onclick="tocarElemento('Urraca', 'audio')">
-                <img src="imagenes/sonidovector.png" alt="Reproducir audio">
+                            <img src="imagenesNOBG/2-removebg-preview.png" alt="Reproducir audio" style="height: 300px; width:300px ;">
             </button>
+
+            <!-- Pantalla Final dentro de las cards -->
+            <div id="pantalla-final" class="final-container hidden">
+                <div class="final-emoji">🎉😊🌟</div>
+                <h2 class="final-titulo">¡Felicidades!</h2>
+                <p class="final-subtitulo">Completaste con éxito el Nivel Básico</p>
+                <a href="intermedio.html" class="btn-siguiente-nivel">Siguiente Nivel</a>
+            </div>
 
         </div>
 
@@ -90,7 +96,6 @@
     <div id="feedback"></div>
 
     <script>
-        // Agregada 'Urraca' al arreglo de parejas para que el juego la reconozca
         const parejas = ['Abeja', 'Iguana', 'Elefante', 'Oso', 'Urraca'];
         let indiceActual = 0;
 
@@ -127,8 +132,8 @@
                 feedback.className = 'correcto';
 
                 confetti({
-                    particleCount: 100,
-                    spread: 70,
+                    particleCount: 80,
+                    spread: 60,
                     origin: { y: 0.6 }
                 });
 
@@ -143,9 +148,10 @@
                         mostrarPareja(parejas[indiceActual]);
                         feedback.textContent = '';
                     } else {
-                        feedback.textContent = '🎉 ¡Felicitaciones, completaste todas las parejas! 🎉';
+                        feedback.textContent = '';
+                        mostrarPantallaFinal();
                     }
-                }, 1500);
+                }, 1200);
             } else {
                 feedback.textContent = `¡Muy bien! Ahora toca el otro elemento de ${palabra}.`;
                 feedback.className = 'correcto';
@@ -170,6 +176,35 @@
             const audio = document.getElementById(`audio-${nombre.toLowerCase()}`);
             if (card) card.classList.remove('hidden');
             if (audio) audio.classList.remove('hidden');
+        }
+
+        function mostrarPantallaFinal() {
+            const pantallaFinal = document.getElementById('pantalla-final');
+            pantallaFinal.classList.remove('hidden');
+
+            // Lanzamiento masivo de confeti inicial
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.5 }
+            });
+
+            // Ráfagas continuas de confeti por 3 segundos
+            const duracion = 3000;
+            const fin = Date.now() + duracion;
+
+            const intervalo = setInterval(function() {
+                if (Date.now() > fin) {
+                    return clearInterval(intervalo);
+                }
+
+                confetti({
+                    startVelocity: 30,
+                    spread: 360,
+                    ticks: 60,
+                    origin: { x: Math.random(), y: Math.random() - 0.2 }
+                });
+            }, 250);
         }
     </script>
 </body>

@@ -1,4 +1,4 @@
- /* Contenedor del tablero adaptado al Nivel Avanzado */
+ /* Contenedor del tablero */
 .game-board {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -7,10 +7,10 @@
     margin: 0 auto;
 }
 
-/* Estilo de las tarjetas grandes y cómodas */
+/* Estilo de las tarjetas*/
 .card-item {
     background-color: white;
-    border: 6px solid #6aff14; /* Marquito verde brillante */
+    border: 6px solid palevioletred; /* Marquito de las tarjetas */
     border-radius: 25px;
     overflow: hidden;
     display: flex;
@@ -29,7 +29,7 @@
     transform: scale(1.05);
 }
 
-/* Estado de la carta oculta */
+/* modo de la carta oculta */
 .card-item.oculta {
     background-color: #ff2e93; /* Rosado fuerte vibrante */
     border-color: #c2185b;

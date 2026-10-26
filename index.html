@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cuadernillo</title>
+
+  <!-- Bootstrap 5 -->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="css/cssmain.css">
+
+    <link rel="stylesheet" href="index.css">
+
+
+</head>
+
+<body>
+
+  <nav class="navbar cuadernillo-navbar">
+
+    <div class="container-fluid px-3 px-md-5">
+
+      <div class="d-flex align-items-center gap-3">
+
+        <span class="brand-name">Cuadernillo</span>
+
+      </div>
+
+      <div class="logo-circle">
+
+        <img src="img/CadernilloOnly.png" alt="Logo de Cuadernillo">
+
+      </div>
+
+    </div>
+
+  </nav>
+
+  <main id="inicio" class="main-content">
+
+    <img class="decor decor-bird" src="imagenes/camaleon.png" alt="Pajarito decorativo">
+
+    <img class="decor decor-penguin" src="imagenes/pinguino.png" alt="Pingüino decorativo">
+
+    <section class="welcome-section container" id="niveles">
+
+      <h1>¡Vamos!</h1>
+
+      <div class="levels-row">
+
+        <a href="basico.html" class="level-card basic-card" id="basico" data-level="Básico">
+
+          <h2>Básico</h2>
+
+          <img src="imagenesNOBG/pollito-removebg-preview.png" alt="polio">
+
+        </a>
+
+        <a href="intermedio.html" class="level-card intermediate-card" id="intermedio" data-level="Intermedio">
+
+          <h2>Intermedio</h2>
+
+          <img src="imagenesNOBG/elefante-removebg-preview.png" alt="Elefante">
+
+        </a>
+
+        <a href="avanzado.html" class="level-card advanced-card" id="avanzado" data-level="Avanzado">
+
+          <h2>Avanzado</h2>
+
+          <img src="imagenesNOBG/rompecabezas-removebg-preview.png" alt="Piezas de rompecabezas">
+
+        </a>
+
+      </div>
+
+    </section>
+
+    <img class="decor decor-frog" src="imagenes/rana.png" alt="Ranita decorativa">
+
+    <img class="decor decor-snake" src="imagenes/culebra.png" alt="Serpiente decorativa">
+
+    <img class="decor decor-chick" src="imagenes/leon.png" alt="Pollito decorativo">
+
+  </main>
+
+  <div class="modal fade" id="levelModal" tabindex="-1" aria-labelledby="levelModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+      <div class="modal-content level-modal">
+
+        <div class="modal-body text-center p-4">
+
+          <div class="modal-icon">📚</div>
+
+          <h3 id="levelModalLabel">¡Vamos a aprender!</h3>
+
+          <p id="levelModalText">Seleccionaste un nivel.</p>
+
+          <button type="button" class="btn btn-danger rounded-pill px-4" data-bs-dismiss="modal">¡Empezar!</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+ 
+
+</body>
+
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel Avanzado - Aprendiendo las Vocales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Librería de Confeti para el efecto de fiesta -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="avanzado.css">
+</head>
+<body>
+
+    <header>
+        <!-- Enlace al menú principal -->
+        <a class="back-btn" href="index.html" aria-label="Volver atrás">
+            <i class="back-arrow"></i>
+        </a>
+        <h1 class="header-title">Nivel Avanzado</h1>
+        <div class="header-spacer"></div>
+    </header>
+
+    <!-- REPRODUCTORES DE AUDIO -->
+    <audio id="audio-clic" src="clickboton.mp3" preload="auto"></audio>
+    <audio id="audio-correcto" src="correcto.mp3" preload="auto"></audio>
+    <audio id="audio-error" src="errorr.mp3" preload="auto"></audio>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container my-5 text-center">
+        <!-- Instrucción -->
+        <p class="fs-5 text-secondary mb-4" id="instruccion">Descubre las cartas y encuentra la pareja de cada vocal con su animal correspondiente.</p>
+
+        <!-- Tablero del juego -->
+        <div class="game-board mb-4" id="tablero"></div>
+
+        <!-- Mensaje de éxito -->
+        <div id="mensaje-ganador" class="fs-3 fw-bold text-success mt-3"></div>
+        <button id="btn-reiniciar" class="btn btn-warning btn-lg fw-bold mt-3 d-none" onclick="reiniciarJuego()">¡Jugar de Nuevo!</button>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Datos de las cartas: Parejas Letra (vocal) - Animal
+        const cartasData = [
+            // Vocal A - Abeja
+            { id: 'A_letra', pareja: 'A', tipo: 'texto', contenido: 'A', texto: 'Vocal A' },
+            { id: 'A_animal', pareja: 'A', tipo: 'imagen', contenido: 'imagenes/abeja.png', texto: 'Abeja' },
+            
+            // Vocal E - Elefante
+            { id: 'E_letra', pareja: 'E', tipo: 'texto', contenido: 'E', texto: 'Vocal E' },
+            { id: 'E_animal', pareja: 'E', tipo: 'imagen', contenido: 'imagenes/elefante.png', texto: 'Elefante' },
+
+            // Vocal I - Iguana
+            { id: 'I_letra', pareja: 'I', tipo: 'texto', contenido: 'I', texto: 'Vocal I' },
+            { id: 'I_animal', pareja: 'I', tipo: 'imagen', contenido: 'imagenes/animales de tarjetas/iguana.png', texto: 'Iguana' },
+
+            // Vocal O - Oso
+            { id: 'O_letra', pareja: 'O', tipo: 'texto', contenido: 'O', texto: 'Vocal O' },
+            { id: 'O_animal', pareja: 'O', tipo: 'imagen', contenido: 'imagenes/animales de tarjetas/oso.png', texto: 'Oso' },
+
+            // Vocal U - Urraca
+            { id: 'U_letra', pareja: 'U', tipo: 'texto', contenido: 'U', texto: 'Vocal U' },
+            { id: 'U_animal', pareja: 'U', tipo: 'imagen', contenido: 'imagenes/animales de tarjetas/urraca.png', texto: 'Urraca' }
+        ];
+
+        let primeraCarta = null;
+        let segundaCarta = null;
+        let bloqueoTablero = false;
+        let parejasEncontradas = 0;
+
+        const audioClic = document.getElementById("audio-clic");
+        const audioCorrecto = document.getElementById("audio-correcto");
+        const audioError = document.getElementById("audio-error");
+
+        // Barajar cartas
+        function barajarCartas() {
+            for (let i = cartasData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cartasData[i], cartasData[j]] = [cartasData[j], cartasData[i]];
+            }
+        }
+
+        // Crear tablero
+        function crearTablero() {
+            const tablero = document.getElementById("tablero");
+            tablero.innerHTML = "";
+            barajarCartas();
+
+            for (let i = 0; i < cartasData.length; i++) {
+                const carta = document.createElement("div");
+                carta.classList.add("card-item", "oculta");
+                carta.dataset.pareja = cartasData[i].pareja;
+                carta.dataset.tipo = cartasData[i].tipo;
+                carta.dataset.contenido = cartasData[i].contenido;
+                carta.dataset.texto = cartasData[i].texto;
+                
+                carta.innerText = "❓";
+                
+                carta.addEventListener("click", voltearCarta);
+                tablero.appendChild(carta);
+            }
+        }
+
+        // Voltear carta
+        function voltearCarta() {
+            if (bloqueoTablero) return;
+            if (this === primeraCarta) return;
+            if (!this.classList.contains("oculta")) return;
+
+            if (audioClic) {
+                audioClic.currentTime = 0;
+                audioClic.play().catch(() => {});
+            }
+
+            this.classList.remove("oculta");
+
+            if (this.dataset.tipo === "imagen") {
+                this.innerHTML = `
+                    <div class="card-image-container">
+                        <img src="${this.dataset.contenido}" alt="${this.dataset.texto}">
+                    </div>
+                    <span class="texto-carta">${this.dataset.texto}</span>
+                `;
+            } else {
+                this.innerHTML = `
+                    <div class="card-image-container" style="font-size: 3.5rem; font-weight: bold; color: #4eb670; display: flex; align-items: center; justify-content: center; height: 100px;">
+                        ${this.dataset.contenido}
+                    </div>
+                    <span class="texto-carta">${this.dataset.texto}</span>
+                `;
+            }
+
+            if (!primeraCarta) {
+                primeraCarta = this;
+                return;
+            }
+
+            segundaCarta = this;
+            verificarPareja();
+        }
+
+        // Verificar parejas
+        function verificarPareja() {
+            let coincide = primeraCarta.dataset.pareja === segundaCarta.dataset.pareja;
+
+            if (coincide) {
+                if (audioCorrecto) {
+                    audioCorrecto.currentTime = 0;
+                    audioCorrecto.play().catch(() => {});
+                }
+
+                parejasEncontradas++;
+                resetearSeleccion();
+
+                // Efecto de confeti
+                confetti({
+                    particleCount: 70,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
+
+                if (parejasEncontradas === 5) {
+                    document.getElementById("instruccion").innerText = "🎉 ¡Felicidades! 🎉";
+                    document.getElementById("mensaje-ganador").innerText = "¡Encontraste todas las parejas de vocales!";
+                    document.getElementById("btn-reiniciar").classList.remove("d-none");
+
+                    // Ráfaga final de celebración
+                    confetti({
+                        particleCount: 150,
+                        spread: 100,
+                        origin: { y: 0.5 }
+                    });
+                }
+            } else {
+                if (audioError) {
+                    audioError.currentTime = 0;
+                    audioError.play().catch(() => {});
+                }
+
+                bloqueoTablero = true;
+                setTimeout(() => {
+                    primeraCarta.classList.add("oculta");
+                    primeraCarta.innerText = "❓";
+                    segundaCarta.classList.add("oculta");
+                    segundaCarta.innerText = "❓";
+                    resetearSeleccion();
+                }, 1200);
+            }
+        }
+
+        function resetearSeleccion() {
+            primeraCarta = null;
+            segundaCarta = null;
+            bloqueoTablero = false;
+        }
+
+        function reiniciarJuego() {
+            parejasEncontradas = 0;
+            document.getElementById("mensaje-ganador").innerText = "";
+            document.getElementById("instruccion").innerText = "Descubre las cartas y encuentra la pareja de cada vocal con su animal correspondiente.";
+            document.getElementById("btn-reiniciar").classList.add("d-none");
+            crearTablero();
+        }
+
+        window.onload = crearTablero;
+    </script>
+</body>
+</html>

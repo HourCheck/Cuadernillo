@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel Intermedio - Aprendiendo las Vocales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Librería de Confeti para el efecto de fiesta -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <link rel="stylesheet" href="intermedio.css">
+
+</head>
+<body>
+
+    <header>
+        <a class="back-btn" href="index.html" aria-label="Volver atrás">
+            <i class="back-arrow"></i>
+        </a>
+        <h1 class="header-title">Nivel Intermedio</h1>
+        <div class="header-spacer"></div>
+    </header>
+
+    <div class="puntuacion-container">
+        PUNTOS: <span id="puntuacion">0</span> / <span id="puntos-maximos">400</span>
+    </div>
+
+    <div class="game-container">
+        <img src="imagenes/tigrebailando.png" alt="Tigre animado" class="mascot-left">
+
+        <div class="cards-grid" id="contenedor-ejercicios">
+            <!-- Las tarjetas se cargan dinámicamente desde JavaScript -->
+        </div>
+
+        <img src="imagenes/leonbailando.png" alt="León animado" class="mascot-right">
+    </div>
+
+    <!-- Banco de vocales para arrastrar (Ubicación: Abajo) -->
+    <div class="banco-vocales" id="banco-vocales">
+        <div class="vocal-drag" draggable="true" ondragstart="drag(event)" id="v-a">a</div>
+        <div class="vocal-drag" draggable="true" ondragstart="drag(event)" id="v-e">e</div>
+        <div class="vocal-drag" draggable="true" ondragstart="drag(event)" id="v-i">i</div>
+        <div class="vocal-drag" draggable="true" ondragstart="drag(event)" id="v-o">o</div>
+    </div>
+
+    <div id="feedback"></div>
+
+    <!-- Pantalla de resultado final -->
+    <div id="pantalla-resultado" class="hidden">
+        <div id="carita-emoji" style="font-size: 4rem;"></div>
+        <h2 id="mensaje-final" class="mt-3"></h2>
+        <a href="avanzado.html" id="btn-siguiente-intermedio" class="btn-siguiente-nivel mt-3">Siguiente Nivel</a>
+    </div>
+
+    <script>
+        const listaEjercicios = [
+            { id: 1, incompleta: "_ lpaca", correcta: "a", imagen: "imagenesNOBG/1-removebg-preview.png", claseImagen: "img-alpaca" },
+            { id: 2, incompleta: "El_fante", correcta: "e", imagen: "imagenes/elefante.png" },
+            { id: 3, incompleta: "_guana", correcta: "i", imagen: "imagenes/animales de tarjetas/iguana.png" },
+            { id: 4, incompleta: "_so", correcta: "o", imagen: "imagenes/animales de tarjetas/oso.png" }
+        ];
+
+        let puntos = 0;
+        let respondidos = 0;
+        const puntosPorAcierto = 100;
+        const puntosPorError = 20;
+        const puntosMaximos = listaEjercicios.length * puntosPorAcierto;
+
+        function cargarEjercicios() {
+            const contenedor = document.getElementById("contenedor-ejercicios");
+            contenedor.innerHTML = "";
+            document.getElementById("puntos-maximos").innerText = puntosMaximos;
+
+            listaEjercicios.forEach(ejercicio => {
+                const cardDiv = document.createElement("div");
+                cardDiv.className = "card-item";
+
+                cardDiv.innerHTML = `
+                    <div class="card-image-container">
+                        <img src="${ejercicio.imagen}" alt="Objeto" class="${ejercicio.claseImagen || ''}">
+                    </div>
+                    <div class="palabra-incompleta">
+                        ${construirHTMLPalabra(ejercicio)}
+                    </div>
+                    <button id="btn-${ejercicio.id}" class="btn-comprobar" onclick="comprobarRespuesta(${ejercicio.id})">
+                        Comprobar
+                    </button>
+                    <div id="mensaje-${ejercicio.id}" class="fw-bold mt-1" style="font-size: 0.85rem;"></div>
+                `;
+                contenedor.appendChild(cardDiv);
+            });
+        }
+
+        function construirHTMLPalabra(ejercicio) {
+            const partes = ejercicio.incompleta.split("_");
+            let html = partes[0] + `<div class="dropzone" id="drop-${ejercicio.id}" ondragover="allowDrop(event)" ondragleave="removeDropStyle(event)" ondrop="drop(event, ${ejercicio.id})"></div>` + (partes[1] || '');
+            return html;
+        }
+
+        // Funciones de Drag and Drop
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.add("drag-over");
+        }
+
+        function removeDropStyle(ev) {
+            ev.currentTarget.classList.remove("drag-over");
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.innerText);
+        }
+
+        function drop(ev, id) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove("drag-over");
+            const data = ev.dataTransfer.getData("text");
+            ev.currentTarget.innerText = data;
+        }
+
+        function comprobarRespuesta(id) {
+            const ejercicio = listaEjercicios.find(e => e.id === id);
+            const dropzoneElem = document.getElementById(`drop-${id}`);
+            const mensajeElem = document.getElementById(`mensaje-${id}`);
+            const btnElem = document.getElementById(`btn-${id}`);
+            const feedbackGlobal = document.getElementById('feedback');
+
+            const respuestaUsuario = dropzoneElem.innerText.trim().toLowerCase();
+
+            if (respuestaUsuario === "") {
+                mensajeElem.style.color = "#FF9800";
+                mensajeElem.innerText = "¡Arrastra una vocal!";
+                return;
+            }
+
+            if (respuestaUsuario === ejercicio.correcta) {
+                puntos += puntosPorAcierto;
+                mensajeElem.style.color = "#00c853";
+                mensajeElem.innerText = "¡Correcto! 🎉";
+                feedbackGlobal.textContent = "¡Muy bien!";
+                feedbackGlobal.className = "correcto";
+
+                dropzoneElem.style.backgroundColor = "#d1e7dd";
+                btnElem.disabled = true;
+                dropzoneElem.ondragover = null;
+                dropzoneElem.ondrop = null;
+                respondidos++;
+
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
+            } else {
+                puntos = Math.max(0, puntos - puntosPorError);
+                mensajeElem.style.color = "#f44336";
+                mensajeElem.innerText = "¡Inténtalo de nuevo! ❌";
+                feedbackGlobal.textContent = "¡Sigue intentando!";
+                feedbackGlobal.className = "incorrecto";
+                dropzoneElem.innerText = "";
+            }
+
+            actualizarPuntaje();
+
+            if (respondidos === listaEjercicios.length) {
+                mostrarResultadoFinal();
+            }
+        }
+
+        function actualizarPuntaje() {
+            document.getElementById("puntuacion").innerText = puntos;
+        }
+
+        function mostrarResultadoFinal() {
+            const pantallaResultado = document.getElementById("pantalla-resultado");
+            const emojiElem = document.getElementById("carita-emoji");
+            const mensajeElem = document.getElementById("mensaje-final");
+            const feedbackGlobal = document.getElementById('feedback');
+
+            feedbackGlobal.textContent = "";
+            pantallaResultado.classList.remove("hidden");
+
+            if (puntos === puntosMaximos) {
+                emojiElem.innerText = "😊🎉";
+                mensajeElem.innerText = "¡Felicidades! Completaste el nivel con éxito";
+                mensajeElem.style.color = "#00c853";
+                
+                // Efecto de confeti continuo
+                confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                });
+
+                const duracion = 2500;
+                const fin = Date.now() + duracion;
+                const intervalo = setInterval(function() {
+                    if (Date.now() > fin) {
+                        return clearInterval(intervalo);
+                    }
+                    confetti({
+                        startVelocity: 25,
+                        spread: 360,
+                        ticks: 50,
+                        origin: { x: Math.random(), y: Math.random() - 0.2 }
+                    });
+                }, 200);
+            } else {
+                emojiElem.innerText = "🎉💪";
+                mensajeElem.innerText = `Lograste ${puntos} puntos. ¡Buen trabajo, sigamos practicando!`;
+                mensajeElem.style.color = "#FF9800";
+            }
+
+            pantallaResultado.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onload = cargarEjercicios;
+    </script>
+</body>
+</html>
